@@ -22,23 +22,25 @@
 
 <body <?php body_class(); ?>>
 <div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'itereon' ); ?></a>
+	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 's_itereon' ); ?></a>
 
 	<header id="masthead" class="site-header">
-		<div class="site-branding">
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a>
-		</div><!-- .site-branding -->
+		<div class="container">
+			<div class="site-branding">
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Tes s <?php bloginfo( 'name' ); ?></a>
+			</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'itereon' ); ?></button>
-			<?php
-			wp_nav_menu( [
-				'theme_location' => 'main-nav',
-				'menu_id'        => 'primary-menu',
-				'fallback_cb'    => false,
-			] );
-			?>
-		</nav><!-- #site-navigation -->
+			<nav id="site-navigation" class="main-navigation">
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 's_itereon' ); ?></button>
+				<?php
+				wp_nav_menu( [
+					'theme_location' => 'main-nav',
+					'menu_id'        => 'primary-menu',
+					'fallback_cb'    => false,
+				] );
+				?>
+			</nav><!-- #site-navigation -->
+		</div>
 	</header><!-- #masthead -->
 
 	<div id="content" class="site-content">

@@ -27,7 +27,7 @@ add_filter( 'login_headertitle', 'itereon_login_title' );
  * Styles for login page
  */
 function itereon_login_stylesheet() {
-	wp_enqueue_style( 'itereon-login', get_stylesheet_directory_uri() . '/assets/dist/css/login.css' );
-	wp_enqueue_script( 'itereon-login', get_stylesheet_directory_uri() . '/assets/dist/js/login.js' );
+	wp_enqueue_style( 'itereon-login', IT_CSS . 'login.min.css' );
+	wp_enqueue_script( 'itereon-login', IT_JS . 'login.min.js' );
 }
 add_action( 'login_enqueue_scripts', 'itereon_login_stylesheet' );

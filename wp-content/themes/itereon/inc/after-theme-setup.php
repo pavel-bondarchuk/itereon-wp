@@ -21,9 +21,9 @@ if ( ! function_exists( 'itereon_setup' ) ) :
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
 		 * If you're building a theme based on itereon, use a find and replace
-		 * to change 'itereon' to the name of your theme in all the template files.
+		 * to change 's_itereon' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain( 'itereon', get_template_directory() . '/languages' );
+		load_theme_textdomain( 's_itereon', get_template_directory() . '/languages' );
 
 		// Add default posts and comments RSS feed links to head.
 		//add_theme_support( 'automatic-feed-links' );
@@ -45,8 +45,8 @@ if ( ! function_exists( 'itereon_setup' ) ) :
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus( array(
-			'main-nav' => esc_html__( 'Main Navigation', 'itereon' ),
-			'footer-nav' => esc_html__( 'Footer Navigation', 'itereon' ),
+			'main-nav' => esc_html__( 'Main Navigation', 's_itereon' ),
+			'footer-nav' => esc_html__( 'Footer Navigation', 's_itereon' ),
 		) );
 
 		/*
