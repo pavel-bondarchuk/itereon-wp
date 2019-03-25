@@ -17,30 +17,7 @@ require IT_DIR . '/inc/widgets.php';
 require IT_DIR . '/inc/disables.php';
 require IT_DIR . '/inc/login.php';
 require IT_DIR . '/inc/svg-support.php';
-
-/**
- * Enqueue scripts and styles.
- */
-function itereon_scripts() {
-	$ver = '';
-
-	wp_enqueue_style( 'main-style', IT_CSS . 'main.min.css' );
-	wp_enqueue_style( 'itereon-style', get_stylesheet_uri() );
-
-	/**
-	 * Font Awesome Library - check latest version using link below
-	 *
-	 * @link https://fontawesome.com/start
-	 */
-	wp_enqueue_style( 'starter-fa', 'https://use.fontawesome.com/releases/v5.7.1/css/all.css' ); //Font Awesome - remove if not needed
-
-	wp_enqueue_script( 'itereon-navigation', IT_JS . 'app.min.js', [], $ver, true );
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
-	}
-}
-add_action( 'wp_enqueue_scripts', 'itereon_scripts' );
-
+require IT_DIR . '/inc/scripts-styles.php';
 
 /**
  * Custom template tags for this theme.

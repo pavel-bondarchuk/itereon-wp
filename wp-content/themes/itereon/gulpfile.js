@@ -12,6 +12,7 @@ const
 		build: 'assets/dist/'
 	},
 	url = 'http://wp.test',
+	textdomain = 's_itereon',
 
 	// modules
 	gulp = require( 'gulp' ),
@@ -19,7 +20,7 @@ const
 	size = require( 'gulp-size' ),
 	imagemin = require( 'gulp-imagemin' ),
 	sass = require( 'gulp-sass' ),
-	babel = require('gulp-babel'),
+	babel = require( 'gulp-babel' ),
 	postcss = require( 'gulp-postcss' ),
 	sassGlob = require( 'gulp-sass-glob' ),
 	sourcemaps = require( 'gulp-sourcemaps' ),
@@ -28,9 +29,9 @@ const
 	uglify = require( 'gulp-uglify' ),
 	concat = require( 'gulp-concat' ),
 	plumber = require( 'gulp-plumber' ),
-	criticalCss = require('gulp-penthouse'),
-	sassLint = require('gulp-sass-lint'),
-	replace = require('gulp-replace'),
+	criticalCss = require( 'gulp-penthouse' ),
+	sassLint = require( 'gulp-sass-lint' ),
+	replace = require( 'gulp-replace' ),
 	browsersync = require( 'browser-sync' ).create();
 
 // Default error handler
@@ -41,11 +42,11 @@ const onError = function( err ) {
 
 /**************** textdomain task ****************/
 
-function textdomain() {
+function translate() {
 
 	return gulp.src( './**/*', {ignore: 'gulpfile.js'} )
-		.pipe(replace('s_itereon2', 's_itereon'))
-		.pipe( gulp.dest('./') );
+		.pipe( replace( 's_itereon', textdomain  ) )
+		.pipe( gulp.dest( './' ) );
 
 }
 
@@ -118,21 +119,21 @@ function css() {
 		.pipe( postcss( cssConfig.postCSS ) )
 		.pipe( sourcemaps.write() )
 		.pipe( size( {showFiles: true} ) )
-		.pipe( rename( { suffix: '.min' } ) )
+		.pipe( rename( {suffix: '.min'} ) )
 		.pipe( gulp.dest( cssConfig.build ) )
 		.pipe( browsersync.reload( {stream: true} ) );
 }
 
 function critCss() {
 	return gulp.src( cssConfig.main )
-		.pipe(criticalCss({
+		.pipe( criticalCss( {
 			out: '/critical.php', // output file name
 			url: url, // url from where we want penthouse to extract critical styles
 			width: 1400, // max window width for critical media queries
 			height: 900, // max window height for critical media queries
 			userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)' // pretend to be googlebot when grabbing critical page styles.
-		}))
-		.pipe(gulp.dest(dir.theme)); // destination folder for the output file
+		} ) )
+		.pipe( gulp.dest( dir.theme ) ); // destination folder for the output file
 }
 
 /**************** JS task ****************/
@@ -157,15 +158,15 @@ function jsHint() {
 
 function js() {
 	return gulp.src( jsConfig.src )
-		.pipe(sourcemaps.init())
-		.pipe(babel())
+		.pipe( sourcemaps.init() )
+		.pipe( babel() )
 		.pipe( concat( 'app.js' ) )
 		.pipe( gulp.dest( jsConfig.build ) )
 		.pipe( uglify() )
-		.pipe( rename( { suffix: '.min' } ) )
+		.pipe( rename( {suffix: '.min'} ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( jsConfig.build ) )
-		.pipe( browsersync.reload({stream: true}) );
+		.pipe( browsersync.reload( {stream: true} ) );
 }
 
 /**************** browser-sync task ****************/
@@ -189,15 +190,15 @@ function bs() {
 /**************** watch task ****************/
 
 function watchjs() {
-	gulp.watch(jsConfig.watch, jsHint);
-	gulp.watch(jsConfig.watch, js);
+	gulp.watch( jsConfig.watch, jsHint );
+	gulp.watch( jsConfig.watch, js );
 }
 
 function watchcss() {
-	gulp.watch(cssConfig.watch, css);
+	gulp.watch( cssConfig.watch, css );
 }
 
-var start = gulp.parallel(css, js, bs, watchcss, watchjs);
+var start = gulp.parallel( css, js, bs, watchcss, watchjs );
 
 exports.cssLint = cssLint;
 exports.css = css;
@@ -208,6 +209,6 @@ exports.js = js;
 exports.bs = bs;
 exports.watchjs = watchjs;
 exports.watchcss = watchcss;
-exports.textdomain = textdomain;
+exports.translate = translate;
 
 exports.default = start;
