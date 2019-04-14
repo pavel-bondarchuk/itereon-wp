@@ -1,9 +1,3 @@
-// Rem output with px fallback
-@mixin font-size($sizeValue: 1) {
-	font-size: ($sizeValue * 16) * 1px;
-	font-size: $sizeValue * 1rem;
-}
-
 // Center block
 @mixin center-block {
 	display: block;
@@ -24,6 +18,73 @@
 }
 
 // Column width with margin
-@mixin column-width($numberColumns: 3) {
-	width: map-get( $columns, $numberColumns ) - ( ( $columns__margin * ( $numberColumns - 1 ) ) / $numberColumns );
+@mixin column-width($number-columns: 3) {
+	width: map-get($columns, $number-columns) - (($columns-margin * ($number-columns - 1)) / $number-columns);
+}
+
+//Shortened Transition
+@mixin tr($t: $default-transition) {
+	transition: $t;
+}
+
+//Responsive hover
+// sass-lint:disable brace-style
+@mixin hover {
+	&:active {
+		@content
+	}
+	@include rwd-min(1025) {
+		&:hover {
+			@content
+		}
+	}
+}
+
+// sass-lint:disable no-vendor-prefixes
+//Placeholder for all browsers
+@mixin placeholder {
+	&:-ms-input-placeholder {
+		@content;
+	}
+
+	&:-moz-placeholder {
+		@content;
+	}
+
+	&::-moz-placeholder {
+		@content;
+	}
+
+	&::-webkit-input-placeholder {
+		@content;
+	}
+
+	&::placeholder {
+		@content;
+	}
+}
+
+//Scrollbar styles
+@mixin scrollbar {
+	&::-webkit-scrollbar {
+		@content;
+	}
+}
+
+@mixin scrollbar-track {
+	&::-webkit-scrollbar-track {
+		@content;
+	}
+}
+
+@mixin scrollbar-thumb {
+	&::-webkit-scrollbar-thumb {
+		@content;
+	}
+}
+
+@mixin scrollbar-track-piece {
+	&::-webkit-scrollbar-track-piece {
+		@content;
+	}
 }

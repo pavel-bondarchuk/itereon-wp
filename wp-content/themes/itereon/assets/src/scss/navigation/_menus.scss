@@ -9,9 +9,12 @@
 		list-style: none;
 		margin: 0;
 		padding-left: 0;
+		@include m(xl) {
+			display: block;
+		}
 
 		ul {
-			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2); // sass-lint:disable-line no-color-literals
 			float: left;
 			position: absolute;
 			top: 100%;
@@ -24,7 +27,12 @@
 			}
 
 			li {
-				&:hover > ul,
+				@include hover {
+					& > ul {
+						left: 100%;
+					}
+				}
+
 				&.focus > ul {
 					left: 100%;
 				}
@@ -33,19 +41,20 @@
 			a {
 				width: 200px;
 			}
-
-			:hover > a,
-			.focus > a {
-			}
-
-			a:hover,
-			a.focus {
-			}
 		}
 
-		li:hover > ul,
-		li.focus > ul {
-			left: auto;
+		li {
+			@include hover {
+				ul {
+					left: auto;
+				}
+			}
+
+			&.focus {
+				ul {
+					left: auto;
+				}
+			}
 		}
 	}
 
@@ -55,6 +64,7 @@
 
 		&:hover > a,
 		&.focus > a {
+			//sass-lint:disable-block no-empty-rulesets
 		}
 	}
 
@@ -63,25 +73,18 @@
 		text-decoration: none;
 	}
 
-	.current_page_item > a,
-	.current-menu-item > a,
-	.current_page_ancestor > a,
-	.current-menu-ancestor > a {
+	&.toggled {
+		ul {
+			display: block;
+		}
 	}
 }
 
-/* Small menu. */
-.menu-toggle,
-.main-navigation.toggled ul {
+// Small menu.
+.menu-toggle {
 	display: block;
-}
-
-@media screen and (min-width: 37.5em) {
-	.menu-toggle {
+	@include m(xl) {
 		display: none;
-	}
-	.main-navigation ul {
-		display: block;
 	}
 }
 

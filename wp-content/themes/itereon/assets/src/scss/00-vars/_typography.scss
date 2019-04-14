@@ -36,24 +36,8 @@ $headings-font-weight:        500;
 $headings-line-height:        1.2;
 $headings-color:              null;
 
-$display1-size:               6rem;
-$display2-size:               5.5rem;
-$display3-size:               4.5rem;
-$display4-size:               3.5rem;
-
-$display1-weight:             300;
-$display2-weight:             300;
-$display3-weight:             300;
-$display4-weight:             300;
-$display-line-height:         $headings-line-height;
-
-$lead-font-size:              $font-size-base * 1.25;
-$lead-font-weight:            300;
-
 $small-font-size:             80%;
 
-$font__main: sans-serif;
-$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-$font__pre: "Courier 10 Pitch", Courier, monospace;
-$font__line-height-body: 1.5;
-$font__line-height-pre: 1.6;
+$font-main: sans-serif;
+$font-code: $font-family-monospace;
+$font-pre: "Courier 10 Pitch", Courier, monospace;

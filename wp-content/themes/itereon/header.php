@@ -31,7 +31,11 @@
 			</div><!-- .site-branding -->
 
 			<nav id="site-navigation" class="main-navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 's_itereon' ); ?></button>
+				<button class="menu-toggle hamburger hamburger--slider" type="button" aria-controls="primary-menu" aria-expanded="false">
+					<span class="hamburger-box">
+					    <span class="hamburger-inner"></span>
+					</span>
+				</button>
 				<?php
 				wp_nav_menu( [
 					'theme_location' => 'main-nav',

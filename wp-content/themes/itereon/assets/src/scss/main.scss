@@ -1,76 +1,50 @@
-/*--------------------------------------------------------------
->>> TABLE OF CONTENTS:
-----------------------------------------------------------------
-# Sanitize
-# Bootstrap Flex grid
-# Typography
-# Elements
-# Forms
-# Navigation
-	## Links
-	## Menus
-# Accessibility
-# Alignments
-# Widgets
-# Media
-	## Captions
-	## Galleries
---------------------------------------------------------------*/
-@import "00-vars/*.scss";
-@import "01-mixins/*.scss";
+//--------------------------------------------------------------
+//>>> TABLE OF CONTENTS:
+//--------------------------------------------------------------
+// @link https://github.com/sasstools/sass-lint - find all docs for valid scss
+//# Sanitize
+//# Bootstrap Flex grid
+//# Plugins
+//# Typography
+//# Elements
+//# Forms
+//# Navigation
+//# Modules
+//# Widgets
+//# Media
+//--------------------------------------------------------------
+@import "00-vars/*";
+@import "01-mixins/*";
 
 
-/*--------------------------------------------------------------
-# Sanitize
---------------------------------------------------------------*/
-@import 'sanitize.css/sanitize';
+//# Sanitize
+@import "sanitize.css/sanitize";
 
-/*--------------------------------------------------------------
-# Bootstrap Grid
---------------------------------------------------------------*/
+//# Bootstrap Grid
 @import "bootstrap/scss/bootstrap-grid";
-@import "bootstrap/scss/utilities/text";
 
-/*--------------------------------------------------------------
-# Typography
---------------------------------------------------------------*/
+//# Plugins
+@import "slick-carousel/slick/slick.scss"; // sass-lint:disable-line clean-import-paths
+@import "magnific-popup/src/css/main";
+@import "hamburgers/_sass/hamburgers/hamburgers";
+
+//# Typography
 @import "typography/*";
 
-/*--------------------------------------------------------------
-# Elements
---------------------------------------------------------------*/
+//# Elements
 @import "elements/*";
 
-/*--------------------------------------------------------------
-# Forms
---------------------------------------------------------------*/
+//# Forms
 @import "forms/*";
 
-/*--------------------------------------------------------------
-# Navigation
---------------------------------------------------------------*/
+//# Navigation
 @import "navigation/*";
 
-/*--------------------------------------------------------------
-# Accessibility
---------------------------------------------------------------*/
-@import "modules/accessibility";
+//# Modules
+@import "modules/*";
 
-/*--------------------------------------------------------------
-# Alignments
---------------------------------------------------------------*/
-@import "modules/alignments";
-
-/*--------------------------------------------------------------
-# Widgets
---------------------------------------------------------------*/
+//# Widgets
 @import "widgets/*";
 
-/*--------------------------------------------------------------
-# Media
---------------------------------------------------------------*/
+//# Media
 @import "media/*";
-
-body {
-		padding: 0;
-}

@@ -1,0 +1,66 @@
+// sass-lint:disable no-duplicate-properties
+// Rem output with px fallback
+@mixin font-size($size-value: 1) {
+	font-size: ($size-value * 16) * 1px;
+	font-size: $size-value * 1rem;
+}
+
+@mixin fs($size-value: 16) {
+	font-size: $size-value + px;
+	font-size: $size-value / 16px;
+}
+
+
+@mixin lh($size-value: 16) {
+	line-height: $size-value + px;
+}
+
+@mixin ff($fs, $lh, $fw) {
+	@include fs($fs);
+	@include lh($lh);
+	font-weight: $fw;
+}
+
+@mixin text-overflow {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@mixin hide-text {
+	font: 0 / 0 a;
+	text-shadow: none;
+	color: transparent;
+}
+
+@mixin hidetext {
+	@include hide-text;
+}
+
+@mixin justify {
+	text-align: justify;
+	line-height: 0;
+	font-size: 0;
+	text-justify: newspaper;
+	zoom: 1;
+	text-align-last: justify;
+
+	&:after {
+		content: "";
+		display: inline-block;
+		width: 100%;
+		height: 0;
+		visibility: hidden;
+		overflow: hidden;
+	}
+}
+
+@mixin selection {
+	& ::selection {
+		@content;
+	}
+}
+
+@mixin sel {
+	@include selection;
+}

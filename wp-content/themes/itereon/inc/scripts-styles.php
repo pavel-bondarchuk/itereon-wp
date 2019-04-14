@@ -23,14 +23,14 @@ function itereon_scripts() {
 	 * Global Styles
 	 */
 	wp_enqueue_style( 'main-styles', IT_CSS . 'main.min.css', [], $ver );
-	wp_enqueue_style( 'addon-styles', get_stylesheet_uri(), [], $ver );
+//	wp_enqueue_style( 'addon-styles', get_stylesheet_uri(), [], $ver );
 
 	/**
 	 * Font Awesome Library - check latest version using link below
 	 *
 	 * @link https://fontawesome.com/start
 	 */
-	wp_enqueue_style( 'starter-fa', 'https://use.fontawesome.com/releases/v5.7.1/css/all.css' ); //Font Awesome - remove if not needed
+	wp_enqueue_style( 'starter-fa', 'https://use.fontawesome.com/releases/v5.8.1/css/all.css' ); //Font Awesome - remove if not needed
 
 	/**
 	 * Global JavaScript

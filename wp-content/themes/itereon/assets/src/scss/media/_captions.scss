@@ -2,7 +2,7 @@
 	margin-bottom: 1.5em;
 	max-width: 100%;
 
-	img[class*="wp-image-"] {
+	img[class*="wp-image-"] { // sass-lint:disable-line no-qualifying-elements
 		@include center-block;
 	}
 

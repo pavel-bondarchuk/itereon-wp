@@ -1,0 +1,58 @@
+// --- max-width
+@mixin r($width) {
+	@media only screen and (max-width: $width + "px") {
+		@content;
+	}
+}
+
+// --- max-height
+@mixin rh($height) {
+	@media only screen and (max-height: $height + "px") {
+		@content;
+	}
+}
+
+// --- min-width
+@mixin m($width) {
+	@each $bp in map-keys($grid-breakpoints) {
+		@if $width == $bp {
+			@media only screen and (min-width: map-get($grid-breakpoints, $bp)) {
+				@content;
+			}
+		} @else {
+			@media only screen and (min-width: $width + "px") {
+				@content;
+			}
+		}
+	}
+}
+
+// --- min-height
+@mixin mh($height) {
+	@media only screen and (min-height: $height + "px") {
+		@content;
+	}
+}
+
+//Support for RWD mixins
+@mixin rwd-max($px) {
+	$min-width: $px#{px};
+	@media screen and (max-width: $min-width) {
+		@content
+	}
+}
+
+@mixin rwd-min($px) {
+	$min-width: $px#{px};
+	@media screen and (min-width: $min-width) {
+		@content
+	}
+}
+
+@mixin rwd-range($px, $px2) {
+	$max-width: $px#{px};
+	$min-width: $px2#{px};
+	@media screen and (max-width: $max-width) and (min-width: $min-width) {
+		@content
+	}
+}

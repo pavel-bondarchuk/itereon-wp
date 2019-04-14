@@ -1,3 +1,22 @@
+// global transition for @include tr;
+$default-transition: all 0.3s ease-in-out 0s;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Used by WordPress core Galleries
 $columns: (
 	1: 100%,
@@ -11,4 +30,5 @@ $columns: (
 	9: 11.11%
 );
 
-$columns__margin: 3.8%;
+$columns-margin: 3.8%;
+

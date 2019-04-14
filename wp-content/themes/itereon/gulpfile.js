@@ -36,6 +36,7 @@ const
 
 // Default error handler
 const onError = function( err ) {
+
 	console.log( 'An error occured:', err.message );
 	this.emit( 'end' );
 };
@@ -45,7 +46,7 @@ const onError = function( err ) {
 function translate() {
 
 	return gulp.src( './**/*', {ignore: 'gulpfile.js'} )
-		.pipe( replace( 's_itereon', textdomain  ) )
+		.pipe( replace( 's_itereon', textdomain ) )
 		.pipe( gulp.dest( './' ) );
 
 }
@@ -53,6 +54,7 @@ function translate() {
 /**************** images task ****************/
 
 const imgConfig = {
+
 	src: dir.src + 'img/**/*',
 	build: dir.build + 'img/',
 	minOpts: {
@@ -101,7 +103,8 @@ const cssConfig = {
 };
 
 function cssLint() {
-	return gulp.src( cssConfig.lintTest )
+
+	return gulp.src( cssConfig.lint )
 		.pipe( sassLint( {
 			configFile: '.sass-lint.yml'
 		} ) )
@@ -125,6 +128,7 @@ function css() {
 }
 
 function critCss() {
+
 	return gulp.src( cssConfig.main )
 		.pipe( criticalCss( {
 			out: '/critical.php', // output file name
@@ -140,23 +144,27 @@ function critCss() {
 
 const jsConfig = {
 
-	src: [dir.src + 'js/libs/*.js', dir.src + 'js/custom/*.js'],
+	src: [dir.src + 'js/libs/*.js', dir.src + 'js/custom/*.js', '!' + dir.src + 'js/custom/login.js'],
 	srcLibs: dir.src + 'js/libs/*.js',
-	lintSrc: dir.src + 'js/custom/*.js',
+	srcLint: dir.src + 'js/custom/*.js',
+	srcCopy: [dir.src + 'js/custom/login.js'],
 	watch: dir.src + 'js/**/*',
 	build: dir.build + 'js/'
 
 };
+
 // Jshint outputs any kind of javascript problems you might have
 // Only checks javascript files inside /src directory
 function jsHint() {
-	return gulp.src( jsConfig.lintSrc )
+
+	return gulp.src( jsConfig.srcLint )
 		.pipe( jshint( '.jshintrc' ) )
 		.pipe( jshint.reporter( 'jshint-stylish' ) )
 		.pipe( jshint.reporter( 'fail' ) );
 }
 
 function js() {
+
 	return gulp.src( jsConfig.src )
 		.pipe( sourcemaps.init() )
 		.pipe( babel() )
@@ -166,7 +174,15 @@ function js() {
 		.pipe( rename( {suffix: '.min'} ) )
 		.pipe( sourcemaps.write() )
 		.pipe( gulp.dest( jsConfig.build ) )
+		.pipe( jsCopy() )
 		.pipe( browsersync.reload( {stream: true} ) );
+}
+
+function jsCopy() {
+
+	return gulp.src( jsConfig.srcCopy )
+		.pipe( babel() )
+		.pipe( gulp.dest( jsConfig.build ) );
 }
 
 /**************** browser-sync task ****************/
@@ -184,6 +200,7 @@ const syncConfig = {
 
 // browser-sync
 function bs() {
+
 	return browsersync.init( syncConfig );
 }
 
@@ -198,7 +215,7 @@ function watchcss() {
 	gulp.watch( cssConfig.watch, css );
 }
 
-var start = gulp.parallel( css, js, bs, watchcss, watchjs );
+const start = gulp.parallel( cssLint, css, js, bs, watchcss, watchjs );
 
 exports.cssLint = cssLint;
 exports.css = css;

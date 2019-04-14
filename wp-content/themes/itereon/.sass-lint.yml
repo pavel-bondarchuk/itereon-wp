@@ -43,7 +43,7 @@ rules:
   final-newline:
     - 1
     - include: true
-  force-attribute-nesting: 1
+  force-attribute-nesting: 0
   force-element-nesting: 1
   force-pseudo-nesting: 1
   function-name-format:
@@ -69,7 +69,7 @@ rules:
     - 1
     - allow-leading-underscore: true
       convention: hyphenatedlowercase
-  mixins-before-declarations: 1
+  mixins-before-declarations: 0
   nesting-depth:
     - 1
     - max-depth: 3
@@ -89,7 +89,7 @@ rules:
     - extra-properties: []
   no-qualifying-elements:
     - 1
-    - allow-element-with-attribute: false
+    - allow-element-with-attribute: true
       allow-element-with-class: false
       allow-element-with-id: false
   no-trailing-zero: 1
