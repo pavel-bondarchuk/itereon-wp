@@ -70,7 +70,7 @@ body {
 
 	.message,
 	#login_error {
-		background: opacity($b, 0.2);
+		background: $b;
 		border-color: $grey;
 		color: $w;
 	}

@@ -15,7 +15,9 @@
  detail.containerPostId	The ID of the post that the contact form is placed in.
  */
 
+
 document.addEventListener( 'wpcf7submit', function( event ) {
+	"use strict";
 	if ( '123' === event.detail.contactFormId ) {
 		alert( "The contact form ID is 123." );
 		// do something productive

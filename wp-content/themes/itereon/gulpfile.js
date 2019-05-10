@@ -51,12 +51,29 @@ function translate() {
 
 }
 
+/**************** fonts task ****************/
+
+const fontsConfig = {
+
+	src: dir.src + 'fonts/**/*',
+	build: dir.build + 'fonts/',
+	watch: dir.src + 'fonts/**/*',
+};
+
+function fonts() {
+
+	return gulp.src( fontsConfig.src )
+		.pipe( gulp.dest( fontsConfig.build ) );
+
+}
+
 /**************** images task ****************/
 
 const imgConfig = {
 
 	src: dir.src + 'img/**/*',
 	build: dir.build + 'img/',
+	watch: dir.src + 'img/**/*',
 	minOpts: {
 		optimizationLevel: 5
 	}
@@ -206,8 +223,12 @@ function bs() {
 
 /**************** watch task ****************/
 
+function watchimages() {
+	gulp.watch( imgConfig.watch, images );
+}
+
 function watchjs() {
-	gulp.watch( jsConfig.watch, jsHint );
+	// gulp.watch( jsConfig.watch, jsHint );
 	gulp.watch( jsConfig.watch, js );
 }
 
@@ -215,7 +236,11 @@ function watchcss() {
 	gulp.watch( cssConfig.watch, css );
 }
 
-const start = gulp.parallel( cssLint, css, js, bs, watchcss, watchjs );
+function watchfonts() {
+	gulp.watch( fontsConfig.watch, fonts );
+}
+
+const start = gulp.parallel( cssLint, fonts, images, css, js, bs, watchcss, watchjs, watchfonts, watchimages );
 
 exports.cssLint = cssLint;
 exports.css = css;
@@ -224,6 +249,8 @@ exports.images = images;
 exports.jsHint = jsHint;
 exports.js = js;
 exports.bs = bs;
+exports.watchimages = watchimages;
+exports.watchfonts = watchfonts;
 exports.watchjs = watchjs;
 exports.watchcss = watchcss;
 exports.translate = translate;
