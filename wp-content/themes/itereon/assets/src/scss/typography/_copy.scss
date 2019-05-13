@@ -18,7 +18,7 @@ address {
 pre {
 	background: $background-pre;
 	font-family: $font-pre;
-	@include font-size(0.9375);
+	@include fs(15);
 	margin-bottom: 1.6em;
 	max-width: 100%;
 	overflow: auto;
@@ -27,7 +27,7 @@ pre {
 
 code, kbd, tt, var {
 	font-family: $font-code;
-	@include font-size(0.9375);
+	@include fs(15);
 }
 
 abbr, acronym {

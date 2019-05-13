@@ -4,7 +4,7 @@ input,
 select,
 optgroup,
 textarea {
-	@include font-size(1);
+	@include fs(16);
 	-webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
 	color: $text-main;
 	font-family: $font-family-base;

@@ -1,18 +1,14 @@
 // sass-lint:disable no-duplicate-properties
 // Rem output with px fallback
-@mixin font-size($size-value: 1) {
-	font-size: ($size-value * 16) * 1px;
-	font-size: $size-value * 1rem;
-}
-
 @mixin fs($size-value: 16) {
 	font-size: $size-value + px;
-	font-size: $size-value / 16px;
+	font-size: $size-value / 16 + rem;
 }
 
 
 @mixin lh($size-value: 16) {
 	line-height: $size-value + px;
+	line-height: $size-value / 16 + rem;
 }
 
 @mixin ff($fs, $lh, $fw) {

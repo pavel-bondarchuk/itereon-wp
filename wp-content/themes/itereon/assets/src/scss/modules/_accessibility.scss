@@ -20,7 +20,7 @@
 		clip-path: none;
 		color: $text-screen;
 		display: block;
-		@include font-size(0.875);
+		@include fs(14);
 		font-weight: bold;
 		height: auto;
 		left: 5px;
