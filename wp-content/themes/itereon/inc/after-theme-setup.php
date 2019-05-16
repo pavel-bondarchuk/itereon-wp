@@ -79,3 +79,10 @@ function itereon_content_width() {
 	$GLOBALS['content_width'] = apply_filters( 'itereon_content_width', 640 );
 }
 add_action( 'after_setup_theme', 'itereon_content_width', 0 );
+
+/**
+ * ACF settings page
+ */
+if( function_exists('acf_add_options_page') ) {
+	acf_add_options_page('Theme Settings');
+}

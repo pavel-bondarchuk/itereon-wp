@@ -28,7 +28,6 @@ const
 	jshint = require( 'gulp-jshint' ),
 	uglify = require( 'gulp-uglify' ),
 	concat = require( 'gulp-concat' ),
-	plumber = require( 'gulp-plumber' ),
 	criticalCss = require( 'gulp-penthouse' ),
 	sassLint = require( 'gulp-sass-lint' ),
 	replace = require( 'gulp-replace' ),
@@ -101,8 +100,8 @@ const cssConfig = {
 	main: dir.build + 'css/main.min.css',
 	sassOpts: {
 		sourceMap: true,
-		outputStyle: 'nested',
-		imagePath: '/img/',
+		outputStyle: 'compressed',
+		imagePath: '../img/',
 		precision: 3,
 		errLogToConsole: true,
 		includePaths: [
@@ -113,8 +112,7 @@ const cssConfig = {
 	postCSS: [
 		require( 'autoprefixer' )( {
 			browsers: ['> 1%']
-		} ),
-		require( 'cssnano' )
+		} )
 	]
 
 };
@@ -132,7 +130,6 @@ function cssLint() {
 function css() {
 
 	return gulp.src( cssConfig.src )
-		.pipe( plumber() )
 		.pipe( sourcemaps.init() )
 		.pipe( sassGlob() )
 		.pipe( sass( cssConfig.sassOpts ).on( 'error', sass.logError ) )
@@ -233,7 +230,7 @@ function watchjs() {
 }
 
 function watchcss() {
-	gulp.watch( cssConfig.watch, css );
+	gulp.watch( cssConfig.watch, gulp.series( css, cssLint ) );
 }
 
 function watchfonts() {

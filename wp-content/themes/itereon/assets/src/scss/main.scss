@@ -23,6 +23,13 @@
 //# Bootstrap Grid
 @import "bootstrap/scss/bootstrap-grid";
 
+//# Font Awesome
+@import "@fortawesome/fontawesome-pro/scss/fontawesome";
+@import "@fortawesome/fontawesome-pro/scss/light";
+@import "@fortawesome/fontawesome-pro/scss/solid";
+@import "@fortawesome/fontawesome-pro/scss/regular";
+@import "@fortawesome/fontawesome-pro/scss/brands";
+
 //# Plugins
 @import "slick-carousel/slick/slick.scss"; // sass-lint:disable-line clean-import-paths
 @import "magnific-popup/src/css/main";

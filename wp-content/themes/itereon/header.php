@@ -27,7 +27,7 @@
 	<header id="masthead" class="site-header">
 		<div class="container">
 			<div class="site-branding">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Tes s <?php bloginfo( 'name' ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Tes s <?php bloginfo( 'name' ); ?><i class="fal fa-abacus"></i></a>
 			</div><!-- .site-branding -->
 
 			<nav id="site-navigation" class="main-navigation">

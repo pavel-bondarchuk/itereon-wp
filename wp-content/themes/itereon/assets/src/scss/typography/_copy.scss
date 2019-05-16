@@ -1,6 +1,6 @@
 // sass-lint:disable single-line-per-selector
 p {
-	margin-bottom: 1.5em;
+	margin-bottom: $spacer;
 }
 
 dfn, cite, em, i {
@@ -8,21 +8,21 @@ dfn, cite, em, i {
 }
 
 blockquote {
-	margin: 0 1.5em;
+	margin: 0 $spacer;
 }
 
 address {
-	margin: 0 0 1.5em;
+	margin: 0 0 $spacer;
 }
 
 pre {
 	background: $background-pre;
 	font-family: $font-pre;
 	@include fs(15);
-	margin-bottom: 1.6em;
+	margin-bottom: $spacer;
 	max-width: 100%;
 	overflow: auto;
-	padding: 1.6em;
+	padding: $spacer;
 }
 
 code, kbd, tt, var {
