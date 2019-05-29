@@ -16,6 +16,8 @@
 @import "00-vars/*";
 @import "01-mixins/*";
 
+//# Fonts
+@import "fonts/*";
 
 //# Sanitize
 @import "sanitize.css/sanitize";
@@ -32,13 +34,14 @@
 
 //# Plugins
 @import "slick-carousel/slick/slick.scss"; // sass-lint:disable-line clean-import-paths
+@import "slick-carousel/slick/slick.scss"; // sass-lint:disable-line clean-import-paths
 @import "magnific-popup/src/css/main";
 @import "hamburgers/_sass/hamburgers/hamburgers";
 
 //# Typography
 @import "typography/*";
 
-//# Elements
+//# HTML Elements
 @import "elements/*";
 
 //# Forms

@@ -36,14 +36,24 @@ if ( ! function_exists( 'itereon_setup' ) ) :
 		 */
 		add_theme_support( 'title-tag' );
 
-		/*
+		/**
 		 * Enable support for Post Thumbnails on posts and pages.
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
 		add_theme_support( 'post-thumbnails' );
 
-		// This theme uses wp_nav_menu() in one location.
+		/**
+		 * Register new image presets
+		 * @link https://developer.wordpress.org/reference/functions/add_image_size/
+		 */
+		// add_image_size('size-name', 300, 169, true); example
+
+
+		/**
+		 * This theme uses wp_nav_menu() in one location.
+		 * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
+		 */
 		register_nav_menus( array(
 			'main-nav' => esc_html__( 'Main Navigation', 's_itereon' ),
 			'footer-nav' => esc_html__( 'Footer Navigation', 's_itereon' ),
