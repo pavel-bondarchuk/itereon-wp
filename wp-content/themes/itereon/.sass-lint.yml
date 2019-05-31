@@ -51,7 +51,7 @@ rules:
     - allow-leading-underscore: true
       convention: hyphenatedlowercase
   hex-length:
-    - 1
+    - 0
     - style: long
   hex-notation:
     - 1
@@ -138,7 +138,7 @@ rules:
         - '%'
       per-property: {}
   quotes:
-    - 1
+    - 0
     - style: double
   shorthand-values:
     - 1
@@ -146,7 +146,7 @@ rules:
         - 1
         - 2
         - 3
-  single-line-per-selector: 1
+  single-line-per-selector: 0
   space-after-bang:
     - 1
     - include: false
