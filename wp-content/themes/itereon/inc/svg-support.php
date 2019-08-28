@@ -23,10 +23,12 @@ function itereon_svgs_display_thumbs() {
 	ob_start();
 	add_action( 'shutdown', 'itereon_svgs_thumbs_filter', 0 );
 	function itereon_svgs_thumbs_filter() {
-		$final     = '';
-		$ob_levels = count( ob_get_level() );
-		for ( $i = 0; $i < $ob_levels; $i ++ ) {
-			$final .= ob_get_clean();
+		$final = '';
+		if ( is_array( ob_get_level() ) || is_object( ob_get_level() ) ) {
+			$ob_levels = count( ob_get_level() );
+			for ( $i = 0; $i < $ob_levels; $i ++ ) {
+				$final .= ob_get_clean();
+			}
 		}
 		echo apply_filters( 'final_output', $final );
 	}

@@ -94,12 +94,11 @@ const cssConfig = {
 
 	src: [dir.src + 'scss/main.scss', dir.src + 'scss/login.scss'],
 	lint: dir.src + 'scss/**/*.s+(a|c)ss',
-	lintTest: dir.src + 'scss/login.scss',
-	watch: dir.src + 'scss/**/*',
+	watch: [dir.src + 'scss/**/*', '!' + dir.src + 'scss/bs.scss', '!' + dir.src + 'scss/fa.scss'],
 	build: dir.build + 'css/',
 	main: dir.build + 'css/main.min.css',
 	sassOpts: {
-		sourceMap: true,
+		sourceMap: false,
 		outputStyle: 'compressed',
 		imagePath: '../img/',
 		precision: 3,
@@ -110,9 +109,7 @@ const cssConfig = {
 	},
 
 	postCSS: [
-		require( 'autoprefixer' )( {
-			browsers: ['> 1%']
-		} )
+		require( 'autoprefixer' )
 	]
 
 };
@@ -136,7 +133,24 @@ function css() {
 		.pipe( postcss( cssConfig.postCSS ) )
 		.pipe( sourcemaps.write() )
 		.pipe( size( {showFiles: true} ) )
-		.pipe( rename( {suffix: '.min'} ) )
+		.pipe( gulp.dest( cssConfig.build ) )
+		.pipe( browsersync.reload( {stream: true} ) );
+}
+
+function cssFa() {
+
+	return gulp.src( [dir.src + 'scss/fa.scss'] )
+		.pipe( sass( cssConfig.sassOpts ).on( 'error', sass.logError ) )
+		.pipe( postcss( cssConfig.postCSS ) )
+		.pipe( gulp.dest( cssConfig.build ) )
+		.pipe( browsersync.reload( {stream: true} ) );
+}
+
+function cssBS() {
+
+	return gulp.src( [dir.src + 'scss/bs.scss'] )
+		.pipe( sass( cssConfig.sassOpts ).on( 'error', sass.logError ) )
+		.pipe( postcss( cssConfig.postCSS ) )
 		.pipe( gulp.dest( cssConfig.build ) )
 		.pipe( browsersync.reload( {stream: true} ) );
 }
@@ -158,13 +172,17 @@ function critCss() {
 
 const jsConfig = {
 
-	src: [dir.src + 'js/libs/*.js', dir.src + 'js/custom/*.js', '!' + dir.src + 'js/custom/login.js'],
+	src: [dir.src + 'js/libs/*.js', dir.src + 'js/custom/*.js'],
 	srcLibs: dir.src + 'js/libs/*.js',
 	srcLint: dir.src + 'js/custom/*.js',
-	srcCopy: [dir.src + 'js/custom/login.js'],
+	srcCopy: [dir.src + 'js/copy/*.js'],
 	watch: dir.src + 'js/**/*',
 	build: dir.build + 'js/'
 
+};
+
+const jsBabelOpts = {
+	presets: ['@babel/preset-env']
 };
 
 // Jshint outputs any kind of javascript problems you might have
@@ -181,7 +199,7 @@ function js() {
 
 	return gulp.src( jsConfig.src )
 		.pipe( sourcemaps.init() )
-		.pipe( babel() )
+		.pipe( babel( jsBabelOpts ) )
 		.pipe( concat( 'app.js' ) )
 		.pipe( gulp.dest( jsConfig.build ) )
 		.pipe( uglify() )
@@ -195,7 +213,7 @@ function js() {
 function jsCopy() {
 
 	return gulp.src( jsConfig.srcCopy )
-		.pipe( babel() )
+		.pipe( babel( jsBabelOpts ) )
 		.pipe( gulp.dest( jsConfig.build ) );
 }
 
@@ -233,11 +251,19 @@ function watchcss() {
 	gulp.watch( cssConfig.watch, gulp.series( css, cssLint ) );
 }
 
+function watchcssBS() {
+	gulp.watch( [dir.src + 'scss/bs.scss', dir.src + 'scss/00-vars/_grid.scss'], gulp.series( cssBS ) );
+}
+
+function watchcssFa() {
+	gulp.watch( [dir.src + 'scss/fa.scss'], gulp.series( cssFa ) );
+}
+
 function watchfonts() {
 	gulp.watch( fontsConfig.watch, fonts );
 }
 
-const start = gulp.parallel( cssLint, fonts, images, css, js, bs, watchcss, watchjs, watchfonts, watchimages );
+const start = gulp.parallel( cssLint, fonts, images, css, cssBS, cssFa, js, bs, watchcss, watchcssBS, watchcssFa, watchjs, watchfonts, watchimages );
 
 exports.cssLint = cssLint;
 exports.css = css;

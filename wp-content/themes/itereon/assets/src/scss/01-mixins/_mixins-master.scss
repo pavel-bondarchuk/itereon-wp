@@ -1,22 +1,3 @@
-// Center block
-@mixin center-block {
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-// Clearfix
-@mixin clearfix() {
-	content: "";
-	display: table;
-	table-layout: fixed;
-}
-
-// Clear after (not all clearfix need this also)
-@mixin clearfix-after() {
-	clear: both;
-}
-
 // Column width with margin
 @mixin column-width($number-columns: 3) {
 	width: map-get($columns, $number-columns) - (($columns-margin * ($number-columns - 1)) / $number-columns);

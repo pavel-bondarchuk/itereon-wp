@@ -2,35 +2,20 @@
 //>>> TABLE OF CONTENTS:
 //--------------------------------------------------------------
 // @link https://github.com/sasstools/sass-lint - find all docs for valid scss
-//# Sanitize
-//# Bootstrap Flex grid
 //# Plugins
 //# Typography
 //# Elements
 //# Forms
-//# Navigation
 //# Modules
 //# Widgets
-//# Media
+//# WooCommerce
 //--------------------------------------------------------------
 @import "00-vars/*";
 @import "01-mixins/*";
+@import "bootstrap/scss/mixins/breakpoints";
 
 //# Fonts
 @import "fonts/*";
-
-//# Sanitize
-@import "sanitize.css/sanitize";
-
-//# Bootstrap Grid
-@import "bootstrap/scss/bootstrap-grid";
-
-//# Font Awesome
-@import "@fortawesome/fontawesome-pro/scss/fontawesome";
-@import "@fortawesome/fontawesome-pro/scss/light";
-@import "@fortawesome/fontawesome-pro/scss/solid";
-@import "@fortawesome/fontawesome-pro/scss/regular";
-@import "@fortawesome/fontawesome-pro/scss/brands";
 
 //# Plugins
 @import "slick-carousel/slick/slick.scss"; // sass-lint:disable-line clean-import-paths
@@ -39,22 +24,19 @@
 @import "hamburgers/_sass/hamburgers/hamburgers";
 
 //# Typography
-@import "typography/*";
+@import "02-typography/*";
 
 //# HTML Elements
-@import "elements/*";
+@import "03-base/*";
 
 //# Forms
 @import "forms/*";
 
-//# Navigation
-@import "navigation/*";
-
 //# Modules
 @import "modules/*";
 
+//# Woocommerce
+@import "woocommerce/*";
+
 //# Widgets
 @import "widgets/*";
-
-//# Media
-@import "media/*";

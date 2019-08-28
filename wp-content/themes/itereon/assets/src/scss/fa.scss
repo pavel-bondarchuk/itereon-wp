@@ -1,0 +1,16 @@
+//NOTE: Do not include all types of fontawesome, it might not be needed.
+$fa-font-path:                "../fonts";
+$fa-font-size-base:           16px;
+$fa-font-display:             auto;
+$fa-css-prefix:               fa;
+$fa-border-color:             #eeeeee;
+$fa-inverse:                  #ffffff;
+$fa-li-width:                 2em;
+
+//# Font Awesome
+@import "@fortawesome/fontawesome-pro/scss/fontawesome";
+//@import "@fortawesome/fontawesome-pro/scss/light";
+@import "@fortawesome/fontawesome-pro/scss/solid";
+//@import "@fortawesome/fontawesome-pro/scss/regular";
+@import "@fortawesome/fontawesome-pro/scss/brands";
+//@import "@fortawesome/fontawesome-pro/scss/duotone";

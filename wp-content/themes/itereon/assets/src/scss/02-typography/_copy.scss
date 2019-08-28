@@ -1,0 +1,53 @@
+// sass-lint:disable single-line-per-selector
+body,
+button,
+input,
+select,
+optgroup,
+textarea {
+	-webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
+	color: $text-main;
+	@include fs(16);
+	font-family: $font-family-base;
+	line-height: $line-height-base;
+}
+
+p {
+	margin-bottom: $spacer;
+}
+
+dfn, cite, em, i {
+	font-style: italic;
+}
+
+blockquote {
+	margin: 0 $spacer;
+}
+
+address {
+	margin: 0 0 $spacer;
+}
+
+pre {
+	background: $background-pre;
+	font-family: $font-pre;
+	@include fs(15);
+	margin-bottom: $spacer;
+	max-width: 100%;
+	overflow: auto;
+	padding: $spacer;
+}
+
+code, kbd, tt, var {
+	font-family: $font-code;
+	@include fs(15);
+}
+
+abbr, acronym {
+	border-bottom: 1px dotted $border-abbr;
+	cursor: help;
+}
+
+big {
+	font-size: 125%;
+}

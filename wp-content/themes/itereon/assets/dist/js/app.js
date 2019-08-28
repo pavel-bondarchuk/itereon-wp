@@ -174,4 +174,9 @@ document.addEventListener('wpcf7submit', function (event) {
 $ = jQuery;
 $(document).ready(function ($) {
   "use strict";
+
+  $('.hamburger').click(function () {
+    var $this = $(this);
+    $(this).toggleClass('is-active');
+  });
 });

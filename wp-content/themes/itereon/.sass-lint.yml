@@ -14,9 +14,7 @@
 # Linter VendorPrefix, option "identifier_list"
 
 files:
-  include: 'assets/src/scss/login.scss'
 options:
-  formatter: stylish
   merge-default-rules: false
 rules:
   bem-depth:
