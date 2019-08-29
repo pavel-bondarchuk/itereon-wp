@@ -54,22 +54,22 @@ if ( ! function_exists( 'itereon_setup' ) ) :
 		 * This theme uses wp_nav_menu() in one location.
 		 * @link https://developer.wordpress.org/reference/functions/register_nav_menus/
 		 */
-		register_nav_menus( array(
+		register_nav_menus( [
 			'main-nav' => esc_html__( 'Main Navigation', 's_itereon' ),
 			'footer-nav' => esc_html__( 'Footer Navigation', 's_itereon' ),
-		) );
+		] );
 
 		/*
 		 * Switch default core markup for search form, comment form, and comments
 		 * to output valid HTML5.
 		 */
-		add_theme_support( 'html5', array(
+		add_theme_support( 'html5', [
 			'search-form',
 			'comment-form',
 			'comment-list',
 			'gallery',
 			'caption',
-		) );
+		] );
 
 	}
 endif;

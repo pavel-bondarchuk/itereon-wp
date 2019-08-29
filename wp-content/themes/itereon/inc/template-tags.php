@@ -75,11 +75,11 @@ if ( ! function_exists( 'itereon_entry_footer' ) ) :
 					wp_kses(
 						/* translators: %s: post title */
 						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 's_itereon' ),
-						array(
-							'span' => array(
-								'class' => array(),
-							),
-						)
+						[
+							'span' => [
+								'class' => [],
+							],
+						]
 					),
 					get_the_title()
 				)
@@ -92,11 +92,11 @@ if ( ! function_exists( 'itereon_entry_footer' ) ) :
 				wp_kses(
 					/* translators: %s: Name of current post. Only visible to screen readers */
 					__( 'Edit <span class="screen-reader-text">%s</span>', 's_itereon' ),
-					array(
-						'span' => array(
-							'class' => array(),
-						),
-					)
+					[
+						'span' => [
+							'class' => [],
+						],
+					]
 				),
 				get_the_title()
 			),
@@ -129,11 +129,11 @@ if ( ! function_exists( 'itereon_post_thumbnail' ) ) :
 
 		<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
 			<?php
-			the_post_thumbnail( 'post-thumbnail', array(
-				'alt' => the_title_attribute( array(
+			the_post_thumbnail( 'post-thumbnail', [
+				'alt' => the_title_attribute( [
 					'echo' => false,
-				) ),
-			) );
+				] ),
+			] );
 			?>
 		</a>
 

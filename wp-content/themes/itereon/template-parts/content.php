@@ -37,19 +37,19 @@
 			wp_kses(
 				/* translators: %s: Name of current post. Only visible to screen readers */
 				__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 's_itereon' ),
-				array(
-					'span' => array(
-						'class' => array(),
-					),
-				)
+				[
+					'span' => [
+						'class' => [],
+					],
+				]
 			),
 			get_the_title()
 		) );
 
-		wp_link_pages( array(
+		wp_link_pages( [
 			'before' => '<div class="page-links">' . esc_html__( 'Pages:', 's_itereon' ),
 			'after'  => '</div>',
-		) );
+		] );
 		?>
 	</div><!-- .entry-content -->
 
