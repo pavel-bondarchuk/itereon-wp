@@ -213,7 +213,6 @@ function js() {
 function jsCopy() {
 
 	return gulp.src( jsConfig.srcCopy )
-		.pipe( babel( jsBabelOpts ) )
 		.pipe( gulp.dest( jsConfig.build ) );
 }
 
