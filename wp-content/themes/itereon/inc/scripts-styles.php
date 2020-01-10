@@ -22,9 +22,12 @@ function itereon_scripts() {
 	/**
 	 * Global Styles
 	 */
-	wp_enqueue_style( 'bs-styles', IT_CSS . 'bs.css', [], $ver );
-	wp_enqueue_style( 'main-styles', IT_CSS . 'main.css', [], $ver );
+//	wp_enqueue_style( 'bs-styles', IT_CSS . 'bs.css', [], $ver );
+//	wp_enqueue_style( 'main-styles', IT_CSS . 'main.css', [], $ver );
 //	wp_enqueue_style( 'addon-styles', get_stylesheet_uri(), [], $ver );
+
+	wp_enqueue_style('main_css', get_template_directory_uri() . '/assets/styles/main.css', array(), '1.0', false);
+	wp_enqueue_script('main_js', get_template_directory_uri() . '/assets/scripts/main.js', array(), '1.0', true);
 
 	/**
 	 * Font Awesome Library - check latest version using link below
@@ -37,7 +40,7 @@ function itereon_scripts() {
 	/**
 	 * Global JavaScript
 	 */
-	wp_enqueue_script( 'itereon-js', IT_JS . 'app.min.js', ['jquery'], $ver, true );
+//	wp_enqueue_script( 'itereon-js', IT_JS . 'app.min.js', ['jquery'], $ver, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
