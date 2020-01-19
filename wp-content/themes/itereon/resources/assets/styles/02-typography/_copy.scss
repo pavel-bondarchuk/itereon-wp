@@ -7,6 +7,7 @@ optgroup,
 textarea {
 	-webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
 	color: $text-main;
+
 	@include fs(16);
 	font-family: $font-family-base;
 	line-height: $line-height-base;
@@ -16,7 +17,10 @@ p {
 	margin-bottom: $spacer;
 }
 
-dfn, cite, em, i {
+dfn,
+cite,
+em,
+i {
 	font-style: italic;
 }
 
@@ -31,6 +35,7 @@ address {
 pre {
 	background: $background-pre;
 	font-family: $font-pre;
+
 	@include fs(15);
 	margin-bottom: $spacer;
 	max-width: 100%;
@@ -38,12 +43,17 @@ pre {
 	padding: $spacer;
 }
 
-code, kbd, tt, var {
+code,
+kbd,
+tt,
+var {
 	font-family: $font-code;
+
 	@include fs(15);
 }
 
-abbr, acronym {
+abbr,
+acronym {
 	border-bottom: 1px dotted $border-abbr;
 	cursor: help;
 }

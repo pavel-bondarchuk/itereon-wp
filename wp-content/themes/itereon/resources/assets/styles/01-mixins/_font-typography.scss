@@ -12,6 +12,7 @@
 }
 
 @mixin ff($fs, $lh, $fw) {
+
 	@include fs($fs);
 	@include lh($lh);
 	font-weight: $fw;
@@ -24,12 +25,13 @@
 }
 
 @mixin hide-text {
-	font: 0 / 0 a;
+	font: 0 / 0;
 	text-shadow: none;
 	color: transparent;
 }
 
 @mixin hidetext {
+
 	@include hide-text;
 }
 
@@ -41,7 +43,7 @@
 	zoom: 1;
 	text-align-last: justify;
 
-	&:after {
+	&::after {
 		content: "";
 		display: inline-block;
 		width: 100%;
@@ -52,12 +54,14 @@
 }
 
 @mixin selection {
-	& ::selection {
+
+	&::selection {
 		@content;
 	}
 }
 
 @mixin sel {
+
 	@include selection;
 }
 

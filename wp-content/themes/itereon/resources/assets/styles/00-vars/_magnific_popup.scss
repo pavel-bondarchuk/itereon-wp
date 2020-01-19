@@ -17,22 +17,22 @@ $mfp-z-index-base:                    1040 !default;                       // Ba
 // controls
 $mfp-include-arrows:                  true !default;                       // Include styles for nav arrows
 $mfp-controls-opacity:                0.65 !default;                       // Opacity of controls
-$mfp-controls-color:                  #ffffff !default;                    // Color of controls
+$mfp-controls-color:                  #fff !default;                    // Color of controls
 $mfp-controls-border-color:           #3f3f3f !default; 	                 // Border color of controls
-$mfp-inner-close-icon-color:          #333333 !default;                    // Color of close button when inside
-$mfp-controls-text-color:             #cccccc !default;                    // Color of preloader and "1 of X" indicator
-$mfp-controls-text-color-hover:       #ffffff !default;                    // Hover color of preloader and "1 of X" indicator
+$mfp-inner-close-icon-color:          #333 !default;                    // Color of close button when inside
+$mfp-controls-text-color:             #ccc !default;                    // Color of preloader and "1 of X" indicator
+$mfp-controls-text-color-hover:       #fff !default;                    // Hover color of preloader and "1 of X" indicator
 
 // Iframe-type options
 $mfp-include-iframe-type:             true !default;                       // Enable Iframe-type popups
 $mfp-iframe-padding-top:              40px !default;                       // Iframe padding top
-$mfp-iframe-background:               #000000 !default;                    // Background color of iframes
+$mfp-iframe-background:               #000 !default;                    // Background color of iframes
 $mfp-iframe-max-width:                900px !default;                      // Maximum width of iframes
 $mfp-iframe-ratio:                    9/16 !default;                       // Ratio of iframe (9/16 = widescreen, 3/4 = standard, etc.)
 
 // Image-type options
 $mfp-include-image-type:              true !default;                       // Enable Image-type popups
-$mfp-image-background:                #444444 !default;
+$mfp-image-background:                #444 !default;
 $mfp-image-padding-top:               40px !default;                       // Image padding top
 $mfp-image-padding-bottom:            40px !default;                       // Image padding bottom
 $mfp-include-mobile-layout-for-image: true !default;                       // Removes paddings from top and bottom

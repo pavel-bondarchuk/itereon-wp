@@ -1,41 +1,40 @@
 //Colors
-$b: #000000;
-$w: #ffffff;
-$grey: #444444;
-$dark-grey: #888888;
+$b: #000;
+$w: #fff;
+$grey: #444;
+$dark-grey: #888;
 
 //Generic
-$background-body: #ffffff;
+$background-body: #fff;
 
-$background-hr: #cccccc;
+$background-hr: #ccc;
 $background-button: #e6e6e6;
-$background-pre: #eeeeee;
+$background-pre: #eee;
 
 $text-screen: #21759b;
-$text-input: #666666;
-$text-input-focus: #111111;
+$text-input: #666;
+$text-input-focus: #111;
 $link: #4169e1;
 $link-visited: #800080;
 $link-hover: #191970;
 $text-main: #404040;
 
-$border-button: #cccccc #cccccc #bbbbbb;
-$border-button-hover: #cccccc #bbbbbb #aaaaaa;
-$border-button-focus: #aaaaaa #bbbbbb #bbbbbb;
-$border-input: #cccccc;
-$border-abbr: #666666;
+$border-button: #ccc #ccc #bbb;
+$border-button-hover: #ccc #bbb #aaa;
+$border-button-focus: #aaa #bbb #bbb;
+$border-input: #ccc;
+$border-abbr: #666;
 
-$color-button: #000000;
-
+$color-button: #000;
 
 
 //Contact Form 7
-$response-output: #ff0000;
+$response-output: #f00;
 $sent-ok: #398f14;
 $spam-block: #ffa500;
 $validation-error: #f7e700;
-$cf7-aborted: #ff0000;
-$not-valid-tip: #ff0000;
+$cf7-aborted: #f00;
+$not-valid-tip: #f00;
 
 //Login Colors
 $login-form-bg: rgba(52, 152, 219, .75);

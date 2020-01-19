@@ -24,19 +24,20 @@ const middleware = [
 ];
 
 browserSync.init({
-  middleware,
+  // middleware,
   proxy: {
     target: proxyTarget,
-    middleware
+    // middleware
   },
   logLevel: 'silent',
+injectCss: true,
   files: watch.map(element => path.resolve(element)),
-  snippetOptions: {
-    rule: {
-      match:  /<\/head>/i,
-      fn: function(snippet, match) {
-        return `<script src="${getPublicPath(publicFolder)}styles/main.js"></script>${snippet}${match}`;
-      }
-    }
-  }
+  // snippetOptions: {
+  //   rule: {
+  //     match:  /<\/head>/i,
+  //     fn: function(snippet, match) {
+        //return `<script src="${getPublicPath(publicFolder)}styles/bs.js"></script>${snippet}${match}`;
+      // }
+    // }
+  // }
 });

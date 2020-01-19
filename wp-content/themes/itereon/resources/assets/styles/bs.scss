@@ -1,6 +1,7 @@
 @import "00-vars/grid";
 
 //# Sanitize
-@import "sanitize.css/sanitize";
+@import "~sanitize.css/sanitize";
+
 //# Bootstrap Grid
-@import "bootstrap/scss/bootstrap-grid";
+@import "~bootstrap/scss/bootstrap-grid";

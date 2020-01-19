@@ -20,8 +20,9 @@
 		clip-path: none;
 		color: $text-screen;
 		display: block;
+
 		@include fs(14);
-		font-weight: bold;
+		font-weight: 700;
 		height: auto;
 		left: 5px;
 		line-height: normal;

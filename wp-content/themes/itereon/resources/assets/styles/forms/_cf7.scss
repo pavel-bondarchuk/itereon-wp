@@ -6,7 +6,7 @@
 	.ajax-loader {
 		visibility: hidden;
 		display: inline-block;
-		background-image: url("../img/black-loader.svg");
+		background-image: url(../../img/black-loader.svg);
 		width: 16px;
 		height: 16px;
 		border: 0;
@@ -36,6 +36,7 @@
 	}
 
 	.wpcf7-submit {
+
 		&:disabled {
 			cursor: not-allowed;
 		}
@@ -84,12 +85,13 @@
 .wpcf7-not-valid-tip {
 	color: $not-valid-tip;
 	font-size: 1em;
-	font-weight: normal;
+	font-weight: 400;
 	display: block;
 }
 
 // html_class="use-floating-validation-tip"
 .use-floating-validation-tip {
+
 	.wpcf7-not-valid-tip {
 		position: absolute;
 		top: 20%;
@@ -107,6 +109,7 @@
 }
 
 .wpcf7-list-item-label {
+
 	&::before,
 	&::after {
 		content: " ";

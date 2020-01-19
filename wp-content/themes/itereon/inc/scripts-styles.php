@@ -22,7 +22,7 @@ function itereon_scripts() {
 	/**
 	 * Global Styles
 	 */
-//	wp_enqueue_style( 'bs-styles', IT_CSS . 'bs.css', [], $ver );
+	wp_enqueue_style( 'bs-styles', get_template_directory_uri() . '/assets/styles/bs.css', [], $ver );
 //	wp_enqueue_style( 'main-styles', IT_CSS . 'main.css', [], $ver );
 //	wp_enqueue_style( 'addon-styles', get_stylesheet_uri(), [], $ver );
 
@@ -34,8 +34,8 @@ function itereon_scripts() {
 	 *
 	 * @link https://fontawesome.com/start
 	 */
-//	wp_enqueue_style( 'fa-local', IT_CSS . 'fa.css', [], $ver ); // uncomment if you want to use Pro version
-	wp_enqueue_style( 'starter-fa', 'https://use.fontawesome.com/releases/v5.10.2/css/all.css' ); //Font Awesome - remove if not needed
+	wp_enqueue_style( 'fa-local', get_template_directory_uri() . '/assets/styles/fa.css', [], $ver ); // uncomment if you want to use Pro version
+//	wp_enqueue_style( 'starter-fa', 'https://use.fontawesome.com/releases/v5.10.2/css/all.css' ); //Font Awesome - remove if not needed
 
 	/**
 	 * Global JavaScript

@@ -11,12 +11,15 @@
 //Responsive hover
 // sass-lint:disable brace-style
 @mixin hover {
+
 	&:active {
-		@content
+		@content;
 	}
+
 	@include rwd-min(1025) {
+
 		&:hover {
-			@content
+			@content;
 		}
 	}
 }
@@ -24,19 +27,20 @@
 // sass-lint:disable no-vendor-prefixes
 //Placeholder for all browsers
 @mixin placeholder {
-	&:-ms-input-placeholder {
-		@content;
-	}
-
-	&:-moz-placeholder {
-		@content;
-	}
 
 	&::-moz-placeholder {
 		@content;
 	}
 
 	&::-webkit-input-placeholder {
+		@content;
+	}
+
+	&:-ms-input-placeholder {
+		@content;
+	}
+
+	&:-moz-placeholder {
 		@content;
 	}
 
@@ -47,24 +51,28 @@
 
 //Scrollbar styles
 @mixin scrollbar {
+
 	&::-webkit-scrollbar {
 		@content;
 	}
 }
 
 @mixin scrollbar-track {
+
 	&::-webkit-scrollbar-track {
 		@content;
 	}
 }
 
 @mixin scrollbar-thumb {
+
 	&::-webkit-scrollbar-thumb {
 		@content;
 	}
 }
 
 @mixin scrollbar-track-piece {
+
 	&::-webkit-scrollbar-track-piece {
 		@content;
 	}
