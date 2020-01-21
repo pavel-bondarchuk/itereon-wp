@@ -101,7 +101,7 @@ const cssConfig = {
 		sourceMap: false,
 		outputStyle: 'compressed',
 		imagePath: '../img/',
-		precision: 3,
+		precision: 5,
 		errLogToConsole: true,
 		includePaths: [
 			dir.nm
