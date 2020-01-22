@@ -1,0 +1,4 @@
+# Disable direct access of any *.php files in /wp_content/uploads folder
+<FilesMatch .php>
+deny from all
+</FilesMatch>
