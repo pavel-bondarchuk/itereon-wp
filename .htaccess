@@ -101,6 +101,13 @@ Order deny,allow
 Deny from all
 </FilesMatch>
 
+# Block WordPress xmlrpc.php requests
+<Files xmlrpc.php>
+order deny,allow
+deny from all
+allow from 123.123.123.123
+</Files>
+
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
 RewriteEngine On

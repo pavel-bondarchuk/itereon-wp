@@ -1,4 +1,5 @@
 <?php
+#define('WP_CACHE', true); // Added by Cache Enabler
 /**
  * The base configurations of the WordPress.
  *

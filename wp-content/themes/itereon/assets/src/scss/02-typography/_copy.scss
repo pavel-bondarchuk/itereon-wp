@@ -7,7 +7,7 @@ optgroup,
 textarea {
 	-webkit-font-smoothing: antialiased; // sass-lint:disable-line no-vendor-prefixes
 	color: $text-main;
-	@include fs(16);
+	@include fs($font-size-base);
 	font-family: $font-family-base;
 	line-height: $line-height-base;
 }
