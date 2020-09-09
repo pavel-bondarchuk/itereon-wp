@@ -13,6 +13,8 @@
 	}
 }
 
-span.wp-caption-text {
-	text-align: center;
+span {
+	&.wp-caption-text {
+		text-align: center;
+	}
 }

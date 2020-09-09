@@ -92,7 +92,7 @@ function images() {
 
 const cssConfig = {
 
-	src: [dir.src + 'scss/main.scss', dir.src + 'scss/login.scss'],
+	src: [dir.src + 'scss/main.scss'],
 	lint: dir.src + 'scss/**/*.s+(a|c)ss',
 	watch: [dir.src + 'scss/**/*', '!' + dir.src + 'scss/bs.scss', '!' + dir.src + 'scss/fa.scss'],
 	build: dir.build + 'css/',
