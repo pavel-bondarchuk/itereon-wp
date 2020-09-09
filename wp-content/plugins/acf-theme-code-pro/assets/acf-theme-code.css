@@ -112,6 +112,32 @@ a.acftc-contact-link {
 	padding:10px;
 }
 
+.acftc-pro-notice {
+	display: block;
+	margin-top:20px;
+	background: #f1f1f1;
+}
+
+.acftc-pro-notice--top {
+	margin-top:0px;
+}
+
+a.acftc-pro-notice__link {
+	padding:10px 20px;
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	text-align: left;
+	box-sizing: border-box;
+	color:#999;
+	transition: all 300ms ease-in;
+}
+
+a.acftc-pro-notice__link:hover {
+	background: #0073aa;
+	color:#FFF;
+}
+
 .acftc-intro-notice {
 	padding:10px 20px;
 }
@@ -127,9 +153,17 @@ a.acftc-contact-link {
 .acf-locations {
 	border-bottom:1px solid #e5e5e5;
 }
+
 .acf-locations .acf-field .acf-label label {
-	line-height: 28px;
+	/* line-height: 28px; */
+	margin-bottom: 3px;
 }
+
+.acf-locations  .acf-label .description {
+    font-size: 12px;
+	color: #777777;
+}
+
 
 /* hide all the locations to start */
 .location-wrap {
@@ -204,17 +238,17 @@ body.post-type-acf .acf-locations .acf-field select  {
 	opacity: 1;
 }
 
-#acf-admin-tool-acftcp_registration .inside {
+#acf-admin-tool-acftc_registration .inside {
 	margin:0 !important;
 	padding:0 !important;
 }
 
-#acf-admin-tool-acftcp_registration .inside p {
+#acf-admin-tool-acftc_registration .inside p {
 	padding:5px 10px;
 	margin:10px 0;
 }
 
-#acf-admin-tool-acftcp_registration .acf-meta-box-wrap .acf-fields {
+#acf-admin-tool-acftc_registration .acf-meta-box-wrap .acf-fields {
 	border: 0px !important;
 }
 
@@ -236,16 +270,16 @@ body.post-type-acf .acf-locations .acf-field select  {
 	display: none;
 }
 
-#acf-admin-tool-acftcp_registration {
+#acf-admin-tool-acftc_registration {
 	/* width: calc(100% + 16px);
 	margin-right: 0; */
 }
 
-#acf-admin-tool-acftcp_registration .hndle {
+#acf-admin-tool-acftc_registration .hndle {
 	cursor: default !important;
 }
 
-#acf-admin-tool-acftcp_registration input[type=text] {
+#acf-admin-tool-acftc_registration input[type=text] {
 	box-shadow: none;
 }
 .acftc-field--top {
@@ -286,9 +320,9 @@ body.post-type-acf .acf-locations .acf-field select  {
 }
 
 /* styles for the block and repeater admin area */
-#acf-admin-tool-acftcp_location_registration .inside {
+#acf-admin-tool-acftc_location_registration .inside {
 	padding: 0 !important;
 }
-#acf-admin-tool-acftcp_location_registration .inside p {
+#acf-admin-tool-acftc_location_registration .inside p {
 	padding:0 12px;
 }

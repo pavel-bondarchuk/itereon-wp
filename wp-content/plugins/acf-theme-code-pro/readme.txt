@@ -1,14 +1,39 @@
 === ACF Theme Code Pro ===
 Contributors: aaronrutley, ben-pearson
 Requires at least: 4.8.0
-Tested up to: 5.0.0
-Stable tag: 2.4.0
+Tested up to: 5.4.0
+Stable tag: 2.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ACF Theme Code will automatically generate the code needed to implement Advanced Custom Fields in your themes!
 
 == Changelog ==
+
+= 2.5.0 =
+* Improve support for WordPress 5.4.
+* Improve support for all field types included in ACF PRO 5.8.9 (including all their various settings).
+* Improve codebase by syncing both free and pro foundations to facilitate faster development cycles and future features.
+* Add escaping to code rendered to bring it in line with recent updates to ACF field documentation. See https://twitter.com/wp_acf/status/1181344882775875584.
+* Improve code rendered for Taxonomy location.
+* Add support for Current User, Current User Role, User Role locations.
+* Add various enhancements to code rendered for the following fields and field settings:
+  * Gallery field (return types Array, URL and ID)
+  * Image (return types Array, URL and ID)
+  * File (return types Array, URL and ID)
+  * Select (values Single and Multiple, return types Value, Label and Array)
+  * Checkbox (return types Value, Label and Array)
+  * Radio Button (return type Array)
+  * Button Group (return type Array)
+  * True / False
+  * Link (return types Array and URL)
+  * Post Object (values Single and Multiple, return types Post Object and Post ID)
+  * Page Link (values Single and Multiple)
+  * Relationship (return types Post Object and Post ID)
+  * Taxonomy (appearances Checkbox, Multi Select, Radio Buttons and Select, return types Term Object and Term ID)
+  * User (values Single and Multiple, return types User Array, User Object and User ID)
+  * Google Map
+* Fixed issue with 'Copy All' fields functionality.
 
 = 2.4.0 =
 * Core: Theme Code Pro generates code to register for ACF Blocks and Options!

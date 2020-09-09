@@ -6,4 +6,4 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // Same as ACF core image field
-include( ACFTCP_Core::$plugin_path . 'render/image.php' );
+include( ACFTC_PLUGIN_DIR_PATH . 'render/image.php' );

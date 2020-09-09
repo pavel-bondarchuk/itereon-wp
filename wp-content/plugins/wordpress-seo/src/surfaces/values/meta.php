@@ -17,7 +17,6 @@ use Yoast\WP\SEO\Presenters\Rel_Prev_Presenter;
 use Yoast\WP\SEO\Surfaces\Helpers_Surface;
 use YoastSEO_Vendor\Symfony\Component\DependencyInjection\ContainerInterface;
 
-
 /**
  * Class Meta
  *
@@ -27,7 +26,6 @@ use YoastSEO_Vendor\Symfony\Component\DependencyInjection\ContainerInterface;
  * @property string      $company_name                      The company name from the Knowledge graph settings.
  * @property int         $company_logo_id                   The attachment ID for the company logo.
  * @property string      $description                       The meta description for the current page, if set.
- * @property array       $googlebot                         The meta robots values we specifically output for Googlebot on this page.
  * @property string      $main_schema_id                    Schema ID that points to the main Schema thing on the page, usually the webpage or article Schema piece.
  * @property string      $meta_description                  The meta description for the current page, if set.
  * @property string      $open_graph_article_author         The article:author value.
@@ -126,9 +124,11 @@ class Meta {
 		$presenters = $this->front_end->get_presenters( $this->context->page_type );
 
 		if ( $this->context->page_type === 'Date_Archive' ) {
-			$presenters = \array_filter( $presenters, function ( $presenter ) {
-				return ! \is_a( $presenter, Rel_Next_Presenter::class ) && ! \is_a( $presenter, Rel_Prev_Presenter::class );
-			} );
+			$callback   = function ( $presenter ) {
+				return ! \is_a( $presenter, Rel_Next_Presenter::class )
+					&& ! \is_a( $presenter, Rel_Prev_Presenter::class );
+			};
+			$presenters = \array_filter( $presenters, $callback );
 		}
 
 		$output = '';
@@ -139,9 +139,10 @@ class Meta {
 			$presenter->presentation = $presentation;
 			$presenter->helpers      = $this->helpers;
 			$presenter->replace_vars = $this->replace_vars;
+
 			$presenter_output = $presenter->present();
 			if ( ! empty( $presenter_output ) ) {
-				$output .= $presenter_output . PHP_EOL;
+				$output .= $presenter_output . \PHP_EOL;
 			}
 		}
 
@@ -170,17 +171,17 @@ class Meta {
 		}
 
 		$presenter_namespace = 'Yoast\WP\SEO\Presenters\\';
-		$parts = explode( '_', $name );
+		$parts               = \explode( '_', $name );
 		if ( $parts[0] === 'twitter' ) {
 			$presenter_namespace .= 'Twitter\\';
-			$parts = \array_slice( $parts, 1 );
+			$parts                = \array_slice( $parts, 1 );
 		}
 		elseif ( $parts[0] === 'open' && $parts[1] === 'graph' ) {
 			$presenter_namespace .= 'Open_Graph\\';
-			$parts = \array_slice( $parts, 2 );
+			$parts                = \array_slice( $parts, 2 );
 		}
-		$presenter_class = $presenter_namespace . implode( '_', array_map( 'ucfirst', $parts ) ) . '_Presenter';
 
+		$presenter_class = $presenter_namespace . \implode( '_', \array_map( 'ucfirst', $parts ) ) . '_Presenter';
 
 		if ( \class_exists( $presenter_class ) ) {
 			/**
@@ -209,5 +210,14 @@ class Meta {
 	 */
 	public function __isset( $name ) {
 		return isset( $this->context->presentation->{$name} );
+	}
+
+	/**
+	 * Strips all nested dependencies from the debug info.
+	 *
+	 * @return array
+	 */
+	public function __debugInfo() {
+		return [ 'context' => $this->context ];
 	}
 }

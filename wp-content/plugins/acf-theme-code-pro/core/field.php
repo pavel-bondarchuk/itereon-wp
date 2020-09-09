@@ -6,26 +6,26 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Class for field functionality
  */
-class ACFTCP_Field {
+class ACFTC_Field {
 
-	private $render_partial;
+	protected $render_partial;
 
-	private $nesting_level;
-	private $indent_count;
-	private $indent = '';
+	protected $nesting_level;
+	protected $indent_count;
+	protected $indent = '';
 
-	private $exclude_html_wrappers = false;
+	protected $exclude_html_wrappers = false;
 
-	private $quick_link_id = '';
-	private $the_field_method = 'the_field';
-	private $get_field_method = 'get_field';
-	private $get_field_object_method = 'get_field_object';
+	protected $quick_link_id = '';
+	protected $the_field_method = 'the_field';
+	protected $get_field_method = 'get_field';
+	protected $get_field_object_method = 'get_field_object';
 
-	private $id = null; // only used if posts table and required for flexible layouts
-	private $label;
-	private $name;
-	private $type;
-	private $var_name;
+	protected $id = null; // only used if posts table and required for flexible layouts
+	protected $label;
+	protected $name;
+	protected $type;
+	protected $var_name;
 
 	/**
 	 * All unserialized field data to be used in partials for edge cases.
@@ -33,9 +33,10 @@ class ACFTCP_Field {
 	 */
 	public $settings;
 
-	private $clone = false;
+	protected $location_rule_param = ''; // eg. 'block'
+	protected $location_rendered_param = ''; // eg. 'acf/example'
 
-	private $location_val; // TODO: Need a comment defining this variable
+	protected $clone = false;
 
 
 	/**
@@ -48,9 +49,9 @@ class ACFTCP_Field {
 		$default_args = array(
 			'nesting_level' => 0,
 			'indent_count' => 0,
-			'location_val' => '',
+			'location_rule_param' => '',
 			'field_data_obj' => null,
-			'clone_parent_acftcp_field' => null,
+			'clone_parent_acftc_field' => null,
 			'exclude_html_wrapper' => false // Change to true for debug
 		);
 
@@ -59,15 +60,14 @@ class ACFTCP_Field {
 		$this->nesting_level = $args['nesting_level'];
 		$this->indent_count = $args['indent_count'];
 
-		$this->location = $args['location_val'];
-		$this->location = $this->get_location_param();
+		$this->location_rule_param = $args['location_rule_param'];
+		$this->location_rendered_param = $this->get_location_rendered_param();
 
 		// Calc indent string
 		$this->indent = $this->get_indent();
 
 		// If field is nested
 		if ( 0 < $this->nesting_level ) {
-
 
 			// Use ACF sub field methods instead
 			$this->the_field_method = 'the_sub_field';
@@ -76,9 +76,9 @@ class ACFTCP_Field {
 
 		}
 
-		if ( "postmeta" == ACFTCP_Core::$db_table ) {
+		if ( "postmeta" == ACFTC_Core::$db_table ) {
 			$this->construct_from_postmeta_table( $args['field_data_obj'] );
-		} elseif ( "posts" == ACFTCP_Core::$db_table ) {
+		} elseif ( "posts" == ACFTC_Core::$db_table ) {
 			$this->construct_from_posts_table( $args['field_data_obj'] );
 		}
 
@@ -86,16 +86,16 @@ class ACFTCP_Field {
 		$this->var_name = $this->get_var_name( $this->name );
 
 		// cloned fields
-		if ( $args['clone_parent_acftcp_field'] ) {
+		if ( $args['clone_parent_acftc_field'] ) {
 
 			$this->clone = true;
-			$clone_settings = $args['clone_parent_acftcp_field']->settings;
+			$clone_settings = $args['clone_parent_acftc_field']->settings;
 
-			// reset the location
-			$this->location = $args['location_val'];
+			// Reset location rule paramater
+			$this->location_rule_param = $args['location_rule_param'];
 
 			if ( 1 === $clone_settings['prefix_name'] ) {
-				$this->name = $args['clone_parent_acftcp_field']->name . '_' . $this->name;
+				$this->name = $args['clone_parent_acftc_field']->name . '_' . $this->name;
 			}
 
 		}
@@ -122,7 +122,7 @@ class ACFTCP_Field {
 			// Repeater Add On and is only done is this case.
 			$this->settings = $field_data_obj;
 
-			// to do : note absence of ID property here
+			// TODO : note absence of ID property here
 			$this->label = $field_data_obj['label'];
 			$this->name = $field_data_obj['name'];
 			$this->type = $field_data_obj['type'];
@@ -134,7 +134,7 @@ class ACFTCP_Field {
 			// unserialize meta values
 			$this->settings = unserialize( $field_data_obj->meta_value );
 
-			// to do : note absence of ID property here
+			// TODO : note absence of ID property here
 			$this->label = $this->settings['label'];
 			$this->name = $this->settings['name'];
 			$this->type = $this->settings['type'];
@@ -206,35 +206,18 @@ class ACFTCP_Field {
 
 	}
 
-	// Get location paramater ( a srting with a variable or a value)
-	private function get_location_param() {
+	/**
+	 * Get location paramater to be rendered
+	 * 
+	 * @return string Containing a variable name or value
+	 **/
+	protected function get_location_rendered_param() {
 
 		// If location set to options page, add the options parameter
-		if ($this->location == 'options_page') {
+		if ( $this->location_rule_param == 'options_page') {
 
 			return ', \'option\'';
 
-		} elseif ($this->location == 'user_role' || $this->location == 'user_form' ) {
-
-			return ', $user_id_prefixed';
-
-		} elseif ($this->location == 'taxonomy') {
-
-			return ', $term_id_prefixed';
-
-		} elseif ($this->location == 'attachment') {
-
-			return ', $attachment_id';
-
-		} elseif ($this->location == 'widget') {
-
-			return ', $widget_id_prefixed';
-
-		} elseif ($this->location == 'comment') {
-
-			return ', $comment_id_prefixed';
-
-		// else set location to an empty string
 		} else {
 
 			return '';
@@ -242,26 +225,24 @@ class ACFTCP_Field {
 		}
 
 	}
-	
+
 	// Get the path to the partial used for rendering the field
-	private function get_render_partial() {
+	protected function get_render_partial() {
 
-		if ( !empty( $this->type ) ) {
+		if ( $this->type ) {
 
-			// Field types only supported in TC Pro
-			if ( file_exists( ACFTCP_Core::$plugin_path . 'pro' ) &&
-				 in_array( $this->type, ACFTCP_Core::$tc_pro_field_types ) ) {
-				$render_partial = ACFTCP_Core::$plugin_path . 'pro/render/' . $this->type . '.php';
-			}
+            // Basic field types with a shared partial
+            if ( in_array( $this->type, ACFTC_Core::$field_types_basic ) ) {
 
-			// Basic field types with a shared partial
-			elseif ( in_array( $this->type, ACFTCP_Core::$basic_types ) ) {
-				$render_partial = ACFTCP_Core::$plugin_path . 'render/basic.php';
-			}
+                $render_partial = ACFTC_PLUGIN_DIR_PATH . 'render/basic.php';
+                
+            }
 
 			// Field types with their own partial
 			else {
-				$render_partial = ACFTCP_Core::$plugin_path . 'render/' . $this->type . '.php';
+
+                $render_partial = ACFTC_PLUGIN_DIR_PATH . 'render/' . $this->type . '.php';
+                
 			}
 
 			return $render_partial;
@@ -276,11 +257,9 @@ class ACFTCP_Field {
 	 * @param string $field_type
 	 * @return bool
 	 **/
-	private function is_ignored_field_type( $field_type = '' ) {
+	protected function is_ignored_field_type( $field_type = '' ) {
 
-		$ignored_field_types = array( 'tab', 'message', 'accordion', 'enhanced_message', 'row' );
-
-		return in_array( $field_type, $ignored_field_types ); 
+		return in_array( $field_type, ACFTC_Core::$ignored_field_types ); 
 
 	}
 
@@ -325,7 +304,7 @@ class ACFTCP_Field {
 
 		if ( $this->is_debugging() ) { 
 
-			echo htmlspecialchars('<h2>Debug: '. $this->label .'</h2>');
+			echo htmlspecialchars('<h3>Debug: '. $this->label .'</h3>');
 
 		} else {
 
@@ -344,7 +323,7 @@ class ACFTCP_Field {
 	 *
 	 * @return string 
 	 **/
-	private function get_field_html_body() {
+	protected function get_field_html_body() {
 
 		ob_start();
 
@@ -352,6 +331,11 @@ class ACFTCP_Field {
 
 			include( $this->render_partial );
 
+		} elseif ( in_array( $this->type, ACFTC_Core::$field_types_all_tc_pro ) ) {
+
+			echo $this->indent . htmlspecialchars( "<?php // Upgrade to ACF Theme Code Pro for " . $this->type . " field support. ?>" ) . "\n";
+			echo $this->indent . htmlspecialchars( "<?php // Visit http://www.hookturn.io for more information. ?>" ) . "\n";
+			
 		} else {
 			
 			echo $this->indent . htmlspecialchars( "<?php // The " . $this->type  . " field type is not supported in this version of the plugin. ?>" ) . "\n";
