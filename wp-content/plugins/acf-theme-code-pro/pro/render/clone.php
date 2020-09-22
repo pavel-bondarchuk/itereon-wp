@@ -31,13 +31,14 @@ if ( !empty( $cloned_items) ) { // make sure at least one field has been selecte
                 $args = array(
                     'nesting_level' => $this->nesting_level,
                     'indent_count' => $this->indent_count,
-                    'location_val' => $this->location,
+                    'location_rule_param' => $this->location_rule_param,
                     'field_data_obj' => $single_field_object,
-                    'clone_parent_acftcp_field' => $this,
+                    'clone_parent_acftc_field' => $this,
                     'exclude_html_wrappers' => $this->exclude_html_wrappers
                 );
 
-                $acftc_field = new ACFTCP_Field( $args );
+				$field_class_name = ACFTC_Core::$class_prefix . 'Field';
+				$acftc_field = new $field_class_name( $args );
 
                 echo $acftc_field->get_field_html();
 
@@ -56,13 +57,13 @@ if ( !empty( $cloned_items) ) { // make sure at least one field has been selecte
                     'field_group_id' => $cloned_field_group_post_object->ID,
                     'nesting_level' => $this->nesting_level,
                     'indent_count' => $this->indent_count,
-                    'location' => $this->location,
-                    'clone_parent_acftcp_group' => $this,
+                    'location_rule_param' => $this->location_rule_param,
+                    'clone_parent_acftc_group' => $this,
                     'exclude_html_wrappers' => $this->exclude_html_wrappers
                 );
-                $cloned_acftcp_group = new ACFTCP_Group( $args );
+                $cloned_acftc_group = new ACFTC_Group( $args );
 
-                echo $cloned_acftcp_group->get_field_group_html();
+                echo $cloned_acftc_group->get_field_group_html();
 
             }
 
@@ -74,6 +75,6 @@ if ( !empty( $cloned_items) ) { // make sure at least one field has been selecte
 
 } else { // no fields selected inside clone field
 
-    echo $this->indent . htmlspecialchars("<?php // No fields selected inside clone field ?>")."\n";
+	echo $this->indent . htmlspecialchars("<?php // warning: clone '" . $this->name . "' has no fields selected ?>")."\n";
 
 }

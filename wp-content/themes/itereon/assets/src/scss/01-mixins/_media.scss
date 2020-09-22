@@ -14,15 +14,13 @@
 
 // --- min-width
 @mixin m($width) {
-	@each $bp in map-keys($grid-breakpoints) {
-		@if $width == $bp {
-			@media only screen and (min-width: map-get($grid-breakpoints, $bp)) {
-				@content;
-			}
-		} @else {
-			@media only screen and (min-width: $width + "px") {
-				@content;
-			}
+	@if map-get($grid-breakpoints, $width) {
+		@media only screen and (min-width: map-get($grid-breakpoints, $width)) {
+			@content;
+		}
+	} @else {
+		@media only screen and (min-width: $width + "px") {
+			@content;
 		}
 	}
 }

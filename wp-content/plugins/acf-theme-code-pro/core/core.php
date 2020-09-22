@@ -2,89 +2,154 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class ACFTCP_Core {
+final class ACFTC_Core {
 
-	public static $plugin_path = '';
-	public static $plugin_url = '';
-	public static $plugin_version = '';
+	public static $class_prefix = 'ACFTC_';
 	public static $db_table = '';
 	public static $indent_repeater = 2;
 	public static $indent_flexible_content = 3;
-	public static $basic_types = array(
+
+	public static $ignored_field_types = array(
+		'tab',
+		'message',
+		'accordion',
+		'enhanced_message',
+		'row'
+	);
+
+	// Basic field types supported by TC Free and TC Pro
+	public static $field_types_basic = array(
 		'text',
 		'textarea',
 		'number',
+		'range',
 		'email',
 		'url',
-		'color_picker',
 		'wysiwyg',
 		'oembed',
-		'range',
-		'extended-color-picker',
-		'qtranslate_text',
-		'qtranslate_textarea',
-		'qtranslate_wysiwyg',
-		'star_rating_field',
-	);
-
-	// Field types supported by TC Pro
-	public static $tc_pro_field_types = array(
-		'flexible_content',
-		'repeater',
-		'gallery',
-		'clone',
-		'font-awesome',
-		'google_font_selector',
-		'rgba_color',
-		'image_crop',
-		'markdown',
-		'nav_menu',
-		'smart_button',
-		'sidebar_selector',
-		'tablepress_field',
-		'table',
-		'address',
-		'acf_code_field',
-		'posttype_select',
-		'link_picker',
-		'youtubepicker',
-		'number_slider',
-		'link',
-		'group',
-		'focal_point',
-		'button_group',
-		'radio',
-		'qtranslate_image',
-		'qtranslate_file',
-		'forms',
-		'icon-picker',
-		'svg_icon',
-		'color_palette',
-		'swatch',
-		'image_aspect_ratio_crop',
+		'date_picker',
+		'date_time_picker',
+		'time_picker',
+		'color_picker',
 	);
 
 	/**
-	 * ACFTCP_Core constructor
+	 * Basic field types only suppported by TC Pro.
+	 * 
+	 * Note: These field types should also appear in the the TC Pro
+	 * field types array below
 	 */
-	public function __construct( $plugin_path, $plugin_url, $plugin_version ) {
+	private static $field_types_basic_pro = array(
+		'extended-color-picker',
+		'star_rating_field',
+		'qtranslate_text',
+		'qtranslate_textarea',
+		'qtranslate_wysiwyg',
+	);
 
-		// Paths, URLS and plugin version
-		self::$plugin_path = $plugin_path;
-		self::$plugin_url = $plugin_url;
-		self::$plugin_version = $plugin_version;
+	/** 
+	 * Field types supported by TC Pro.
+	 * 
+	 * Used for used for locating render partials and also
+	 * displaying appropriate upgrade suggestions.
+	 * 
+	 * Note: This array also includes TC Pro basic field types.
+	 */
+	public static $field_types_all_tc_pro = array(
+		// ACF Pro
+		'repeater',
+		'flexible_content',
+		'gallery',
+		'clone',
 
-		// Hooks
+		// 3rd party
+		'font-awesome',
+		'google_font_selector',
+		'image_crop',
+		'markdown',
+		'rgba_color',
+		'sidebar_selector',
+		'smart_button',
+		'table',
+		'tablepress_field',
+		'address',
+		'number_slider',
+		'posttype_select',
+		'acf_code_field',
+		'link_picker',
+		'youtubepicker',
+		'focal_point',
+		'color_palette', // Color Palette
+		'forms', // Gravityforms and Ninjaforms
+		'icon-picker', // Icon Selector
+		'svg_icon',
+		'swatch', // Color Palette
+		'image_aspect_ratio_crop',
+		'qtranslate_file', // qTranslate
+		'qtranslate_image', // qTranslate
+		'nav_menu',
+
+		// TC Pro basic types (see above)
+		'extended-color-picker', // RGBA Color Picker (https://github.com/constlab/acf-rgba-color-field)
+		'star_rating_field', // Star Rating
+		'qtranslate_text',
+		'qtranslate_textarea',
+		'qtranslate_wysiwyg',
+	);
+
+	/**
+	 * ACFTC_Core constructor
+	 */
+	public function __construct() {
+
+		$this->set_class_prefix();
+		$this->set_basic_field_types();
+		$this->add_core_actions();
+
+	}
+
+    /**
+	 * Set class prefix
+	 */
+	private function set_class_prefix() {
+
+		if ( ACFTC_IS_PRO ) {
+			self::$class_prefix .= 'Pro_';
+		}
+
+	}
+
+    /**
+	 * Set extra basic field types
+	 */
+	private function set_basic_field_types() {
+
+		if ( ACFTC_IS_PRO ) {
+			self::$field_types_basic = array_merge( self::$field_types_basic, self::$field_types_basic_pro );
+		}
+
+	}
+
+	/**
+	 * Add plugin actions
+	 **/
+	private function add_core_actions() {
+
 		add_action( 'admin_init', array($this, 'set_db_table') );
 		add_action( 'add_meta_boxes', array($this, 'register_meta_boxes') );
 		add_action( 'admin_enqueue_scripts', array($this, 'enqueue') );
 
-	}
+		if ( ACFTC_IS_PRO ) {
 
+			add_action( 'acf/include_admin_tools' , array($this, 'add_location_registration_tool') );
+
+		} 
+		
+	}
 
 	/**
 	 * Set the DB Table (as this changes between version 4 and 5)
-	*  So we need to check if we're using version 4 or version 5 of ACF
+	 * So we need to check if we're using version 4 or version 5 of ACF
 	 * This includes ACF 5 in a theme or ACF 4 or 5 installed via a plugin
 	 */
 	public function set_db_table() {
@@ -140,7 +205,7 @@ class ACFTCP_Core {
 
 		add_meta_box(
 			'acftc-meta-box',
-			__( 'Theme Code', 'acf_theme_code_pro' ),
+			__( 'Theme Code', 'acftc-textdomain' ), // Previously `textdomain`
 			array( $this, 'display_callback'),
 			array( 'acf', 'acf-field-group' )
 		);
@@ -155,8 +220,24 @@ class ACFTCP_Core {
 	 */
 	public function display_callback( $field_group_post_obj ) {
 
-		$locations_ui = new ACFTCP_Locations( $field_group_post_obj );
-		echo $locations_ui->get_locations_html();
+		$locations_class_name = self::$class_prefix . 'Locations';
+		$locations_ui = new $locations_class_name( $field_group_post_obj );
+
+        echo $locations_ui->get_locations_html();
+
+	}
+
+
+	/**
+	 * Add meta box for Location Registration Tool to ACF "Tools" page
+	 */
+	public function add_location_registration_tool() {
+		
+		include( ACFTC_PLUGIN_DIR_PATH . 'pro/location-registration/ACFTC_Location_Registration.php'); // TODO update this path and filename
+
+		if( function_exists('acf_register_admin_tool') ) {
+			acf_register_admin_tool( 'ACFTC_Location_Registration' );
+		}
 
 	}
 
@@ -164,26 +245,29 @@ class ACFTCP_Core {
 	// load scripts and styles
 	public function enqueue( $hook ) {
 
-		// grab the post type
 		global $post_type;
-		global $page;
+
 		$page = $GLOBALS['plugin_page'];
 
 		// if post type is an ACF field group
 		if( 'acf-field-group' == $post_type || 'acf' == $post_type || 'acf-tools' == $page ) {
 
 			// Plugin styles
-			wp_enqueue_style( 'acftc_css', self::$plugin_url . 'assets/acf-theme-code.css', '' , self::$plugin_version);
+			wp_enqueue_style( 'acftc_css', ACFTC_PLUGIN_DIR_URL . 'assets/acf-theme-code.css', '' , ACFTC_PLUGIN_VERSION);
 
 			// Prism (code formatting)
-			wp_enqueue_style( 'acftc_prism_css', self::$plugin_url . 'assets/prism.css', '' , self::$plugin_version);
-			wp_enqueue_script( 'acftc_prism_js', self::$plugin_url . 'assets/prism.js', '' , self::$plugin_version);
+			wp_enqueue_style( 'acftc_prism_css', ACFTC_PLUGIN_DIR_URL . 'assets/prism.css', '' , ACFTC_PLUGIN_VERSION);
+			wp_enqueue_script( 'acftc_prism_js', ACFTC_PLUGIN_DIR_URL . 'assets/prism.js', '' , ACFTC_PLUGIN_VERSION);
 
 			// Clipboard
-			wp_enqueue_script( 'acftc_clipboard_js', self::$plugin_url . 'assets/clipboard.min.js', '' , self::$plugin_version);
+			wp_enqueue_script( 'acftc_clipboard_js', ACFTC_PLUGIN_DIR_URL . 'assets/clipboard.min.js', '' , ACFTC_PLUGIN_VERSION);
 
 			// Plugin js
-			wp_enqueue_script( 'acftc_js', self::$plugin_url . 'assets/acf-theme-code.js', array( 'acftc_clipboard_js' ), '', self::$plugin_version, true );
+			wp_enqueue_script( 'acftc_js', ACFTC_PLUGIN_DIR_URL . 'assets/acf-theme-code.js', array( 'acftc_clipboard_js' ), '', ACFTC_PLUGIN_VERSION, true );
+
+			if ( ACFTC_IS_PRO ) {
+				wp_enqueue_script( 'acftc_pro_js', ACFTC_PLUGIN_DIR_URL . 'pro/assets/acf-theme-code-pro.js', array( 'acftc_js' ), '', ACFTC_PLUGIN_VERSION, true );
+			}
 
 		}
 

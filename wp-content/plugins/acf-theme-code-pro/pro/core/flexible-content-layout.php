@@ -1,9 +1,9 @@
 <?php
 
-// to do : make this a child class of field group class ?
+// TODO : make this a child class of field group class ?
 
 // Class for a layout in a flexible content field.
-class ACFTCP_Flexible_Content_Layout {
+class ACFTC_Flexible_Content_Layout {
 
 	public $name; // Used in flexible content layout render partial
 	public $sub_fields; // Used in flexible content layout render partial
@@ -17,7 +17,7 @@ class ACFTCP_Flexible_Content_Layout {
 	 */
 	public $nesting_level;
 	public $indent_count;
-	public $field_location;
+	public $location_rule_param;
 
 	private $exclude_html_wrappers = false;
 
@@ -32,7 +32,7 @@ class ACFTCP_Flexible_Content_Layout {
 			'name' => '', // TODO Check this default is appropriate
 			'nesting_level' => 0,
 			'indent_count' => 0,
-			'field_location' => '',
+			'location_rule_param' => '',
 			'layout_key' => null, // Used to get sub fields (ACF PRO)
 			'parent_field_id' => null, // Used to get sub fields (ACF PRO)
 			'sub_fields' => null, // Used to get sub fields (Flexi add on)
@@ -44,16 +44,16 @@ class ACFTCP_Flexible_Content_Layout {
 		$this->name = $args['name'];
 		$this->nesting_level = $args['nesting_level'];
 		$this->indent_count = $args['indent_count'];
-		$this->field_location = $args['field_location'];
+		$this->location_rule_param = $args['location_rule_param'];
 
 		// If flexi add on is used
-		if ( 'postmeta' == ACFTCP_Core::$db_table ) {
+		if ( 'postmeta' == ACFTC_Core::$db_table ) {
 
 			$this->sub_fields = $args['sub_fields'];
 
 		}
 		// Else ACF PRO is used
-		elseif ( 'posts' == ACFTCP_Core::$db_table ) {
+		elseif ( 'posts' == ACFTC_Core::$db_table ) {
 
 			$this->sub_fields = $this->get_sub_fields_from_posts_table( $args['layout_key'], $args['parent_field_id'] );
 
@@ -111,18 +111,17 @@ class ACFTCP_Flexible_Content_Layout {
 
 		$sub_fields_html = ''; 
 
-		// loop through sub fields
 		foreach ( $this->sub_fields as $sub_field ) {
 
 			$args = array(
 				'nesting_level' => $this->nesting_level,
 				'indent_count' => $this->indent_count,
-				'location_val' => '',
 				'field_data_obj' => $sub_field,
 				'exclude_html_wrappers' => $this->exclude_html_wrappers
 			);
 
-			$acftc_field = new ACFTCP_Field( $args );
+			$field_class_name = ACFTC_Core::$class_prefix . 'Field';
+			$acftc_field = new $field_class_name( $args );
 
 			$sub_fields_html .= $acftc_field->get_field_html();
 

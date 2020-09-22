@@ -5,4 +5,4 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-include( ACFTCP_Core::$plugin_path . 'pro/render/radio.php' );
+include( ACFTC_PLUGIN_DIR_PATH . 'pro/render/radio.php' );

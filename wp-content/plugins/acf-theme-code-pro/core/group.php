@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * Class for field group functionality
  */
-class ACFTCP_Group {
+class ACFTC_Group {
 
 	// field group id (used to query for fields)
 	private $id;
@@ -35,10 +35,9 @@ class ACFTCP_Group {
 
 	// if the field group is a clone
 	public $clone = false;
-	public $clone_parent_acftcp_group = null;
+	public $clone_parent_acftc_group = null;
 
-	// field location (for options panel etc)
-	public $location;
+	public $location_rule_param; // eg. 'block'
 
 	/**
 	 * Constructor for field group
@@ -52,8 +51,8 @@ class ACFTCP_Group {
 			'fields' => null,
 			'nesting_level' => 0,
 			'indent_count' => 0,
-			'location' => '',
-			'clone_parent_acftcp_group' => null,
+			'location_rule_param' => '',
+			'clone_parent_acftc_group' => null,
 			'exclude_html_wrappers' => false // Change to true for debug
 		);
 
@@ -76,8 +75,8 @@ class ACFTCP_Group {
 
 		$this->nesting_level = $args['nesting_level'];
 		$this->indent_count = $args['indent_count'];
-		$this->location = $args['location'];
-		$this->clone_parent_acftcp_group = $args['clone_parent_acftcp_group'];
+		$this->location_rule_param = $args['location_rule_param'];
+		$this->clone_parent_acftc_group = $args['clone_parent_acftc_group'];
 		$this->exclude_html_wrappers = $args['exclude_html_wrappers'];
 
 	}
@@ -90,9 +89,9 @@ class ACFTCP_Group {
 	*/
 	private function get_fields() {
 
-		if ( 'postmeta' == ACFTCP_Core::$db_table ) { // ACF
+		if ( 'postmeta' == ACFTC_Core::$db_table ) { // ACF
 			return $this->get_fields_from_postmeta_table();
-		 } elseif ( 'posts' == ACFTCP_Core::$db_table ) { // ACF PRO
+		 } elseif ( 'posts' == ACFTC_Core::$db_table ) { // ACF PRO
 			return $this->get_fields_from_posts_table();
 		}
 
@@ -155,9 +154,9 @@ class ACFTCP_Group {
 		$field_group_html = '';
 
 		// ACF - create, sort and render fields
-		if ( 'postmeta' == ACFTCP_Core::$db_table ) {
+		if ( 'postmeta' == ACFTC_Core::$db_table ) {
 
-			// create an array of ACFTCP_Field objects
+			// create an array of ACFTC field objects
 			$acftc_fields = array();
 
 			foreach ( $this->fields as $field ) {
@@ -165,12 +164,13 @@ class ACFTCP_Group {
 				$args = array(
 					'nesting_level' => $this->nesting_level,
 					'indent_count' => $this->indent_count,
-					'location' => $this->location,
+					'location_rule_param' => $this->location_rule_param,
 					'field_data_obj' => $field,
 					'exclude_html_wrappers' => $this->exclude_html_wrappers
 				);
 
-				$acftc_field = new ACFTCP_Field( $args );
+				$field_class_name = ACFTC_Core::$class_prefix . 'Field';
+				$acftc_field = new $field_class_name( $args );
 
 				array_push( $acftc_fields, $acftc_field );
 
@@ -187,21 +187,22 @@ class ACFTCP_Group {
 		}
 
 		// ACF PRO - create and render fields (no sorting required)
-		elseif ( 'posts' == ACFTCP_Core::$db_table ) {
+		elseif ( 'posts' == ACFTC_Core::$db_table ) {
 
-			// create and render ACFTCP_Field objects
+			// create and render ACFTC field objects
 			foreach ( $this->fields as $field_post_obj ) {
 
 				$args = array(
 					'nesting_level' => $this->nesting_level,
 					'indent_count' => $this->indent_count,
-					'location_val' => $this->location, // TODO: Incomplete location functionality
+					'location_rule_param' => $this->location_rule_param, 
 					'field_data_obj' => $field_post_obj,
-					'clone_parent_acftcp_field' => $this->clone_parent_acftcp_group, // TODO: Add this clone bit to the postmeta table func above?
+					'clone_parent_acftc_field' => $this->clone_parent_acftc_group, // TODO: Add this clone bit to the postmeta table func above?
 					'exclude_html_wrappers' => $this->exclude_html_wrappers
 				);
 
-				$acftc_field = new ACFTCP_Field( $args );
+				$field_class_name = ACFTC_Core::$class_prefix . 'Field';
+				$acftc_field = new $field_class_name( $args );
 
 				$field_group_html .= $acftc_field->get_field_html();
 

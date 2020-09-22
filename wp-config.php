@@ -86,7 +86,7 @@ if ( WP_DEBUG ) {
 /**
  * Prevent editing of WordPress files from wp-admin
  */
-define( 'DISALLOW_FILE_EDIT', true );
+//define( 'DISALLOW_FILE_EDIT', true );
 
 /**
  * Prevent files installation form wp-admin
@@ -119,7 +119,7 @@ define( 'WP_MEMORY_LIMIT', '256M' );
  * allowing the possibility of reverting to a previous version of that post or page.
  * The saving of revisions can be disabled, or a maximum number of revisions per post or page can be specified.
  */
-define( 'WP_POST_REVISIONS', 3 );
+define( 'WP_POST_REVISIONS', 6 );
 
 /**
  * Modify AutoSave Interval
@@ -127,14 +127,7 @@ define( 'WP_POST_REVISIONS', 3 );
  * You may want to increase this setting for longer delays in between auto-saves,
  * or decrease the setting to make sure you never lose changes. The default is 60 seconds.
  */
-define( 'AUTOSAVE_INTERVAL', 160 );
-
-/**
- * Contact form 7
- */
-define ('WPCF7_LOAD_JS', true); // Added to disable JS loading
-define ('WPCF7_LOAD_CSS', false); // Added to disable CSS loading
-define ('WPCF7_AUTOP', false); // Added to disable wrapping new lines with paragraphs
+define( 'AUTOSAVE_INTERVAL', 60 );
 
 /* That's all, stop editing! Happy blogging. */
 

@@ -1,46 +1,6 @@
+// sass-lint:disable-all
+
 .wpcf7 {
-	margin: 0;
-	padding: 0;
-
-	// for more loader icons check https://loading.io/
-	.ajax-loader {
-		visibility: hidden;
-		display: inline-block;
-		background-image: url("../img/black-loader.svg");
-		width: 16px;
-		height: 16px;
-		border: 0;
-		padding: 0;
-		margin: 0 0 0 4px;
-		vertical-align: middle;
-
-		&.is-active {
-			visibility: visible;
-		}
-	}
-
-	.ajax-error {
-		display: none;
-	}
-
-	.placeheld {
-		color: $dark-grey;
-	}
-
-	input[type="file"] {
-		cursor: pointer;
-
-		&:disabled {
-			cursor: default;
-		}
-	}
-
-	.wpcf7-submit {
-		&:disabled {
-			cursor: not-allowed;
-		}
-	}
-
 	.screen-reader-response {
 		position: absolute;
 		overflow: hidden;
@@ -51,30 +11,42 @@
 		padding: 0;
 		border: 0;
 	}
-}
 
-.wpcf7-response-output {
-	margin: 2em 0.5em 1em;
-	padding: 0.2em 1em;
-	border: 2px solid $response-output;
-}
+	form {
+		.wpcf7-response-output {
+			margin: 2em 0.5em 1em;
+			padding: 0.2em 1em;
+			border: 2px solid $cf7-blue; /* Blue */
+		}
 
-.wpcf7-mail-sent-ok {
-	border: 2px solid $sent-ok;
-}
+		&.init .wpcf7-response-output {
+			display: none;
+		}
 
-.wpcf7-mail-sent-ng,
-.wpcf7-aborted {
-	border: 2px solid $cf7-aborted;
-}
+		&.sent .wpcf7-response-output {
+			border-color: $cf7-green; /* Green */
+		}
 
-.wpcf7-spam-blocked {
-	border: 2px solid $spam-block;
-}
+		&.failed .wpcf7-response-output,
+		&.aborted .wpcf7-response-output {
+			border-color: $cf7-red; /* Red */
+		}
 
-.wpcf7-validation-errors,
-.wpcf7-acceptance-missing {
-	border: 2px solid $validation-error;
+		&.spam .wpcf7-response-output {
+			border-color: $cf7-orange; /* Orange */
+		}
+
+		&.invalid .wpcf7-response-output,
+		&.unaccepted .wpcf7-response-output {
+			border-color: $cf7-yellow; /* Yellow */
+		}
+	}
+
+	input[type="url"],
+	input[type="email"],
+	input[type="tel"] {
+		direction: ltr;
+	}
 }
 
 .wpcf7-form-control-wrap {
@@ -82,37 +54,66 @@
 }
 
 .wpcf7-not-valid-tip {
-	color: $not-valid-tip;
+	color: $cf7-red;
 	font-size: 1em;
 	font-weight: normal;
 	display: block;
 }
 
-// html_class="use-floating-validation-tip"
-.use-floating-validation-tip {
-	.wpcf7-not-valid-tip {
-		position: absolute;
-		top: 20%;
-		left: 20%;
-		z-index: 100;
-		border: 1px solid $not-valid-tip;
-		background: $w;
-		padding: .2em .8em;
-	}
+.use-floating-validation-tip .wpcf7-not-valid-tip {
+	position: absolute;
+	top: 20%;
+	left: 20%;
+	z-index: 100;
+	border: 1px solid $cf7-red;
+	background: $w;
+	padding: .2em .8em;
 }
 
-.wpcf7-list-item {
+span.wpcf7-list-item {
 	display: inline-block;
-	margin: 0 10px 0 0;
+	margin: 0 0 0 1em;
 }
 
-.wpcf7-list-item-label {
-	&::before,
-	&::after {
-		content: " ";
+span.wpcf7-list-item-label::before,
+span.wpcf7-list-item-label::after {
+	content: " ";
+}
+
+div.wpcf7 {
+	.ajax-loader {
+		visibility: hidden;
+		display: inline-block;
+		background-image: url("../img/black-loader.svg");
+		width: 16px;
+		height: 16px;
+		border: 0;
+		padding: 0;
+		margin: 0 0 0 4px;
+		vertical-align: middle;
 	}
-}
 
-.wpcf7-display-none {
-	display: none;
+	.ajax-loader.is-active {
+		visibility: visible;
+	}
+
+	div.ajax-error {
+		display: none;
+	}
+
+	.placeheld {
+		color: $dark-grey;
+	}
+
+	input[type="file"] {
+		cursor: pointer;
+	}
+
+	input[type="file"]:disabled {
+		cursor: default;
+	}
+
+	.wpcf7-submit:disabled {
+		cursor: not-allowed;
+	}
 }

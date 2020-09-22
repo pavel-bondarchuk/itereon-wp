@@ -10,6 +10,8 @@ namespace Yoast\WP\SEO\Presentations;
 use Yoast\WP\SEO\Context\Meta_Tags_Context;
 use Yoast\WP\SEO\Generators\Breadcrumbs_Generator;
 use Yoast\WP\SEO\Generators\Open_Graph_Image_Generator;
+use Yoast\WP\SEO\Generators\Open_Graph_Locale_Generator;
+use Yoast\WP\SEO\Generators\Schema_Generator;
 use Yoast\WP\SEO\Generators\Twitter_Image_Generator;
 use Yoast\WP\SEO\Helpers\Current_Page_Helper;
 use Yoast\WP\SEO\Helpers\Image_Helper;
@@ -17,8 +19,6 @@ use Yoast\WP\SEO\Helpers\Options_Helper;
 use Yoast\WP\SEO\Helpers\Url_Helper;
 use Yoast\WP\SEO\Helpers\User_Helper;
 use Yoast\WP\SEO\Models\Indexable;
-use Yoast\WP\SEO\Generators\Open_Graph_Locale_Generator;
-use Yoast\WP\SEO\Generators\Schema_Generator;
 
 /**
  * Class Indexable_Presentation
@@ -26,8 +26,6 @@ use Yoast\WP\SEO\Generators\Schema_Generator;
  * @property string $title
  * @property string $meta_description
  * @property array  $robots
- * @property array  $bingbot
- * @property array  $googlebot
  * @property string $canonical
  * @property string $rel_next
  * @property string $rel_prev
@@ -233,8 +231,11 @@ class Indexable_Presentation extends Abstract_Presentation {
 	 */
 	protected function get_base_robots() {
 		return [
-			'index'  => ( $this->model->is_robots_noindex === true ) ? 'noindex' : 'index',
-			'follow' => ( $this->model->is_robots_nofollow === true ) ? 'nofollow' : 'follow',
+			'index'             => ( $this->model->is_robots_noindex === true ) ? 'noindex' : 'index',
+			'follow'            => ( $this->model->is_robots_nofollow === true ) ? 'nofollow' : 'follow',
+			'max-snippet'       => 'max-snippet:-1',
+			'max-image-preview' => 'max-image-preview:large',
+			'max-video-preview' => 'max-video-preview:-1',
 		];
 	}
 
@@ -246,6 +247,12 @@ class Indexable_Presentation extends Abstract_Presentation {
 	 * @return array The filtered meta robots values.
 	 */
 	protected function filter_robots( $robots ) {
+		if ( $robots['index'] === 'noindex' ) {
+			$robots['max-snippet']       = null;
+			$robots['max-image-preview'] = null;
+			$robots['max-video-preview'] = null;
+		}
+
 		$robots_string = \implode( ', ', $robots );
 
 		/**
@@ -257,7 +264,7 @@ class Indexable_Presentation extends Abstract_Presentation {
 		 */
 		$robots_filtered = \apply_filters( 'wpseo_robots', $robots_string, $this );
 
-		if ( is_string( $robots_filtered ) ) {
+		if ( \is_string( $robots_filtered ) ) {
 			$robots_values = \explode( ', ', $robots_filtered );
 			$robots_new    = [];
 
@@ -269,45 +276,47 @@ class Indexable_Presentation extends Abstract_Presentation {
 				$robots_new[ $key ] = $value;
 			}
 
-			return \array_filter( $robots_new );
+			$robots = $robots_new;
 		}
 
 		if ( ! $robots_filtered ) {
 			return [];
 		}
 
-		return \array_filter( $robots );
+		/**
+		 * Filter: 'wpseo_robots_array' - Allows filtering of the meta robots output array of Yoast SEO.
+		 *
+		 * @api array $robots The meta robots directives to be used.
+		 *
+		 * @param Indexable_Presentation $presentation The presentation of an indexable.
+		 */
+		return \apply_filters( 'wpseo_robots_array', \array_filter( $robots ), $this );
 	}
 
 	/**
 	 * Generates the robots value for the googlebot tag.
 	 *
+	 * @deprecated 14.9 Values merged into the robots meta tag.
+	 *
 	 * @return array The robots value with opt-in snippets.
 	 */
 	public function generate_googlebot() {
-		return $this->generate_snippet_opt_in();
+		_deprecated_function( __METHOD__, 'WPSEO 14.9' );
+
+		return [];
 	}
 
 	/**
 	 * Generates the value for the bingbot tag.
 	 *
+	 * @deprecated 14.9 Values merged into the robots meta tag.
+	 *
 	 * @return array The robots value with opt-in snippets.
 	 */
 	public function generate_bingbot() {
-		return $this->generate_snippet_opt_in();
-	}
+		_deprecated_function( __METHOD__, 'WPSEO 14.9' );
 
-	/**
-	 * Generates a snippet opt-in robots value.
-	 *
-	 * @return array The googlebot value.
-	 */
-	private function generate_snippet_opt_in() {
-		if ( in_array( 'noindex', $this->robots, true ) ) {
-			return [];
-		}
-
-		return \array_filter( \array_merge( $this->robots, [ 'max-snippet:-1', 'max-image-preview:large', 'max-video-preview:-1' ] ) );
+		return [];
 	}
 
 	/**
@@ -558,13 +567,13 @@ class Indexable_Presentation extends Abstract_Presentation {
 	 */
 	public function generate_twitter_site() {
 		switch ( $this->context->site_represents ) {
-			case 'person' :
+			case 'person':
 				$twitter = $this->user->get_the_author_meta( 'twitter', (int) $this->context->site_user_id );
 				if ( empty( $twitter ) ) {
 					$twitter = $this->options->get( 'twitter_site' );
 				}
 				break;
-			case 'company' :
+			case 'company':
 			default:
 				$twitter = $this->options->get( 'twitter_site' );
 				break;
@@ -602,5 +611,17 @@ class Indexable_Presentation extends Abstract_Presentation {
 	 */
 	public function generate_breadcrumbs() {
 		return $this->breadcrumbs_generator->generate( $this->context );
+	}
+
+	/**
+	 * Strips all nested dependencies from the debug info.
+	 *
+	 * @return array
+	 */
+	public function __debugInfo() {
+		return [
+			'model'   => $this->model,
+			'context' => $this->context,
+		];
 	}
 }

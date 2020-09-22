@@ -4,15 +4,12 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// field location
-$field_location = '';
-
 // set sub field nesting level and indent
-$sub_field_indent_count = $this->indent_count + ACFTCP_Core::$indent_flexible_content;
+$sub_field_indent_count = $this->indent_count + ACFTC_Core::$indent_flexible_content;
 
 // don't need to check for no layouts, acf ui insists on at least one
-echo $this->indent . htmlspecialchars("<?php if ( have_rows( '" . $this->name ."'". $this->location . " ) ): ?>")."\n";
-echo $this->indent . htmlspecialchars("	<?php while ( have_rows( '" . $this->name ."'". $this->location . " ) ) : the_row(); ?>")."\n";
+echo $this->indent . htmlspecialchars("<?php if ( have_rows( '" . $this->name ."'". $this->location_rendered_param . " ) ): ?>")."\n";
+echo $this->indent . htmlspecialchars("	<?php while ( have_rows( '" . $this->name ."'". $this->location_rendered_param . " ) ) : the_row(); ?>")."\n";
 
 $layout_count = 0;
 
@@ -20,7 +17,7 @@ $layout_count = 0;
 foreach ( $this->settings['layouts'] as $layout ) {
 
 	// If Flexi add on is used
-	if ( "postmeta" == ACFTCP_Core::$db_table ) {
+	if ( "postmeta" == ACFTC_Core::$db_table ) {
 
 		$layout_key = NULL;
 		$parent_field_id = NULL;
@@ -28,7 +25,7 @@ foreach ( $this->settings['layouts'] as $layout ) {
 
 	}
 	// Else ACF PRO is used
-	elseif ( "posts" == ACFTCP_Core::$db_table ) {
+	elseif ( "posts" == ACFTC_Core::$db_table ) {
 
 		$layout_key = $layout['key'];
 		$parent_field_id = $this->id;
@@ -41,13 +38,12 @@ foreach ( $this->settings['layouts'] as $layout ) {
 		'name' => $layout['name'],
 		'nesting_level' => $this->nesting_level + 1,
 		'indent_count' => $sub_field_indent_count,
-		'field_location' => $field_location,
 		'layout_key' => $layout_key,
 		'parent_field_id' => $this->id,
 		'sub_fields' => $sub_fields,
 		'exclude_html_wrappers' => $this->exclude_html_wrappers
 	);
-	$acftc_layout = new ACFTCP_Flexible_Content_Layout( $args );
+	$acftc_layout = new ACFTC_Flexible_Content_Layout( $args );
 
 	// TODO Check for layout without a name
 
