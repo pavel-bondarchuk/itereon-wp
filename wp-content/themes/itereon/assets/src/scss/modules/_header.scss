@@ -1,0 +1,50 @@
+.site-header {
+	@include m(xl) {
+		padding: 30px 0;
+	}
+	transition: all 0.2s ease-in-out 0s;
+	&.sticky-header {
+		padding: 5px;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background: $w;
+		box-shadow: $box-shadow;
+		z-index: 999999;
+		.custom-logo-link {
+			img {
+				width: auto;
+				max-width: none;
+				height: 90px;
+			}
+		}
+	}
+	.custom-logo-link {
+		img {
+			@include r(1200) {
+				width: auto;
+				max-width: none;
+				height: 90px;
+				padding: 5px;
+			}
+		}
+	}
+	.search-icon {
+		padding: 3px;
+		cursor: pointer;
+		margin-left: 20px;
+		@include r(1200) {
+			display: none;
+		}
+	}
+	.search-form {
+		display: none;
+		&.is-active {
+			display: flex;
+			position: absolute;
+			right: 0;
+			top: 100%;
+		}
+	}
+}

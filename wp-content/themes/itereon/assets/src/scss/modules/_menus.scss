@@ -1,25 +1,61 @@
+.menu-open {
+	.main-navigation {
+		@include r(1200) {
+			transform: translateY(0);
+		}
+	}
+}
 .main-navigation {
-	clear: both;
-	display: block;
-	float: left;
-	width: 100%;
+	@include r(1200) {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		background-color: $w;
+		transform: translateY(-100vh);
+		transition: all 0.2s ease-in-out 0s;
+	}
 
 	ul {
-		display: none;
-		list-style: none;
-		margin: 0;
-		padding-left: 0;
 		@include m(xl) {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: flex-end;
+			list-style: none;
+			margin: 0;
+		}
+
+		@include r(1200) {
 			display: block;
+			padding: 60px 50px 0;
+			margin: 40px 0 0;
+			height: calc(100vh - 40px);
+			overflow-y: auto;
 		}
 
 		ul {
-			box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2); // sass-lint:disable-line no-color-literals
-			float: left;
-			position: absolute;
-			top: 100%;
-			left: -999em;
-			z-index: 99999;
+			&.sub-menu {
+				display: none;
+			}
+			&.sub-menu-open {
+				@include r(1200) {
+					float: left;
+					display: block;
+					width: 100%;
+					height: 100%;
+					box-shadow: none;
+					padding: 0;
+					margin: 0;
+				}
+				@include m(xl) {
+					position: absolute;
+					left: 0;
+					display: block;
+					margin: 0;
+					padding: 0;
+				}
+			}
 
 			ul {
 				left: -999em;
@@ -46,7 +82,7 @@
 		li {
 			@include hover {
 				ul {
-					left: auto;
+					left: 0;
 				}
 			}
 
@@ -59,18 +95,102 @@
 	}
 
 	li {
-		float: left;
-		position: relative;
+		&.menu-item-has-children {
+			@include r(1200) {
+				&:before {
+					content: '';
+					position: absolute;
+					right: 0;
+					bottom: calc(50% - 5px);
+					width: 10px;
+					height: 10px;
+					border: solid $grey;
+					border-width: 0 3px 3px 0;
+					transform: rotate(-45deg);
+				}
+			}
+			@include m(xl) {
+				&:before {
+					content: '';
+					position: absolute;
+					right: 0;
+					bottom: calc(50% - 5px);
+					width: 10px;
+					height: 10px;
+					border: solid $grey;
+					border-width: 0 3px 3px 0;
+					transform: rotate(45deg);
+				}
+			}
+		}
 
-		&:hover > a,
+		position: relative;
+		&.current-menu-item {
+			> a {
+				&:after {
+					content: '';
+					position: absolute;
+					left: 0;
+					bottom: 4px;
+					width: 100%;
+					height: 10px;
+					background: $color-high-rise-yellow;
+					z-index: -1;
+				}
+			}
+		}
+		@include m(xl) {
+			padding: 25px;
+		}
+		@include r(1200) {
+			padding: 20px;
+		}
+		a {
+			//sass-lint:disable-block no-empty-rulesets
+		}
+		&:hover > a {
+			//sass-lint:disable-block no-empty-rulesets
+			&:after {
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom: 4px;
+				width: 100%;
+				height: 10px;
+				background: $color-high-rise-yellow;
+				z-index: -1;
+			}
+		}
 		&.focus > a {
 			//sass-lint:disable-block no-empty-rulesets
 		}
 	}
 
 	a {
-		display: block;
-		text-decoration: none;
+		color: $b;
+		position: relative;
+		@include m(xl) {
+			display: block;
+			text-decoration: none;
+			padding: 0;
+			font-family: $font-family-base;
+			font-weight: 500;
+			font-style: normal;
+			font-size: 18px;
+		}
+		@include r(1200) {
+			text-decoration: none;
+			display: inline;
+			width: 100%;
+			align-items: center;
+			justify-content: space-between;
+			text-transform: none;
+			padding: 0;
+			font-size: 26px;
+			line-height: 34px;
+			font-weight: 400;
+			color: $b;
+		}
 	}
 
 	&.toggled {
@@ -83,6 +203,9 @@
 // Small menu.
 .menu-toggle {
 	display: block;
+	line-height: 0;
+	position: relative;
+	z-index: 99;
 	@include m(xl) {
 		display: none;
 	}

@@ -26,11 +26,21 @@
 
 	<header id="masthead" class="site-header">
 		<div class="container">
+			<div class="row align-items-center">
+			<div class="col-lg-2 col-3">
 			<div class="site-branding">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Tes s <?php bloginfo( 'name' ); ?><i class="fal fa-abacus"></i></a>
+					<?php
+					$custom_logo_id = get_theme_mod( 'custom_logo' );
+					$logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+					if ( has_custom_logo() ) {
+						the_custom_logo();
+					} else {
+						echo '<h1>' . get_bloginfo('name') . '</h1>';
+					}
+					?>
 			</div><!-- .site-branding -->
-
-			<nav id="site-navigation" class="main-navigation">
+			</div>
+			<div class="col-lg-10 col-9 d-flex justify-content-end">
 				<button class="menu-toggle hamburger hamburger--slider" type="button" aria-controls="primary-menu" aria-expanded="false">
 					<span class="hamburger-box">
 					    <span class="hamburger-inner"></span>
@@ -41,9 +51,16 @@
 					'theme_location' => 'main-nav',
 					'menu_id'        => 'primary-menu',
 					'fallback_cb'    => false,
+					'container'      => 'nav',
+					'container_class' => 'main-navigation',
+					'container_id'    => 'site-navigation',
 				] );
 				?>
-			</nav><!-- #site-navigation -->
+				<span class="search-icon d-xl-flex align-items-center"><i class="fa fa-search"></i></span>
+				<?php echo get_search_form(); ?>
+			<!-- #site-navigation -->
+			</div>
+		</div>
 		</div>
 	</header><!-- #masthead -->
 

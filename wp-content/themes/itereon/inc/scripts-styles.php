@@ -24,6 +24,7 @@ function itereon_scripts() {
 	 */
 	wp_enqueue_style( 'bs-styles', IT_CSS . 'bs.css', [], $ver );
 	wp_enqueue_style( 'main-styles', IT_CSS . 'main.css', [], $ver );
+	wp_enqueue_style( 'fonts', '//use.typekit.net/rgp6dcu.css', [], $ver );
 //	wp_enqueue_style( 'addon-styles', get_stylesheet_uri(), [], $ver );
 
 	/**

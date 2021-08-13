@@ -71,6 +71,17 @@ if ( ! function_exists( 'itereon_setup' ) ) :
 			'caption',
 		] );
 
+		$defaults = array(
+			'height'               => 150,
+			'width'                => 160,
+			'flex-height'          => true,
+			'flex-width'           => true,
+			'header-text'          => array( 'site-title', 'site-description' ),
+			'unlink-homepage-logo' => true,
+		);
+
+		add_theme_support( 'custom-logo', $defaults );
+
 	}
 endif;
 add_action( 'after_setup_theme', 'itereon_setup' );

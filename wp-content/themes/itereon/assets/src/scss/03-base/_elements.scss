@@ -10,6 +10,9 @@ html {
 
 body {
 	background: $background-body; // Fallback for when there is no custom background color defined.
+	&.no-scroll {
+		padding-top: 40px;
+	}
 }
 
 hr {

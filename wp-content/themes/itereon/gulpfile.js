@@ -11,7 +11,7 @@ const
 		src: 'assets/src/',
 		build: 'assets/dist/'
 	},
-	url = 'http://wp.test',
+	url = 'http://itereon-wp.test/',
 	textdomain = 's_itereon',
 
 	// modules
